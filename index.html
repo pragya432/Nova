@@ -9,20 +9,13 @@
   <!-- Favicon / Meta -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2307090e'/><circle cx='50' cy='50' r='30' fill='none' stroke='%2300f0ff' stroke-width='8'/><circle cx='50' cy='50' r='12' fill='%238b5cf6'/></svg>">
 
-  <!-- Design System & Modular Stylesheets -->
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/hero.css">
-  <link rel="stylesheet" href="css/city-map.css">
-  <link rel="stylesheet" href="css/intelligence.css">
-  <link rel="stylesheet" href="css/simulation.css">
-  <link rel="stylesheet" href="css/human-ai.css">
-  <link rel="stylesheet" href="css/dashboard.css">
-  <link rel="stylesheet" href="css/timeline.css">
-  <link rel="stylesheet" href="css/your-nova.css">
-  <link rel="stylesheet" href="css/about-sources.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Design System & Unified Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
 
   <!-- Third-party Libraries via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -1131,17 +1124,7 @@
     </div>
   </footer>
 
-  <!-- Application Logic Modules -->
-  <script src="js/config.js"></script>
-  <script src="js/audio.js"></script>
-  <script src="js/city-3d.js"></script>
-  <script src="js/city-map.js"></script>
-  <script src="js/network-graph.js"></script>
-  <script src="js/simulation.js"></script>
-  <script src="js/human-ai.js"></script>
-  <script src="js/dashboard.js"></script>
-  <script src="js/timeline.js"></script>
-  <script src="js/your-nova.js"></script>
-  <script src="js/main.js"></script>
+  <!-- Unified Application Bundle -->
+  <script src="./app.js"></script>
 </body>
 </html>
