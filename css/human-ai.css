@@ -1,0 +1,329 @@
+/* ==========================================================================
+   SECTION 04: HUMAN + AI — ETHICAL DECISION MATRIX & POLICY OVERRIDE
+   ========================================================================== */
+
+.human-ai-section {
+  position: relative;
+  background: radial-gradient(circle at 50% 20%, #111726 0%, var(--bg-core) 100%);
+}
+
+/* Dual Column Comparison: AI vs HUMAN */
+.dual-roles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-3xl);
+  position: relative;
+}
+
+.dual-roles-grid::after {
+  content: '+';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  background: var(--bg-core);
+  border: 1px solid var(--border-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cyan-core);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.25);
+  z-index: 5;
+}
+
+.role-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-2xl);
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+.role-card:hover {
+  border-color: var(--border-medium);
+}
+
+.role-card.role-ai {
+  border-left: 3px solid var(--cyan-core);
+}
+
+.role-card.role-human {
+  border-right: 3px solid var(--violet-core);
+}
+
+.role-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.role-title {
+  font-size: 1.75rem;
+  letter-spacing: 0.05em;
+}
+
+.role-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.role-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+}
+
+.role-item-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.role-ai .role-item-dot {
+  background-color: var(--cyan-core);
+  box-shadow: 0 0 6px var(--cyan-core);
+}
+
+.role-human .role-item-dot {
+  background-color: var(--violet-core);
+  box-shadow: 0 0 6px var(--violet-core);
+}
+
+/* Synthesis Statement Banner */
+.synthesis-banner {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+  padding: var(--space-xl);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.synthesis-tagline {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.synthesis-tagline span {
+  color: var(--cyan-core);
+}
+
+.synthesis-sub {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* Interactive Dilemma / Policy Case Simulator */
+.policy-dilemma-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-2xl);
+  position: relative;
+  box-shadow: var(--shadow-lg);
+}
+
+.policy-dilemma-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.policy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: var(--violet-core);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: var(--radius-xs);
+}
+
+.policy-recommendation-box {
+  background: rgba(7, 9, 14, 0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.rec-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--cyan-core);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.rec-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Decision Action Triad: ACCEPT, MODIFY, REJECT */
+.policy-action-trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.policy-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.policy-action-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-medium);
+  transform: translateY(-2px);
+}
+
+.policy-action-btn.active {
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+.policy-action-btn.btn-accept.active {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--emerald-core);
+  color: var(--emerald-core);
+}
+
+.policy-action-btn.btn-modify.active {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: var(--cyan-core);
+  color: var(--cyan-core);
+}
+
+.policy-action-btn.btn-reject.active {
+  background: rgba(244, 63, 94, 0.1);
+  border-color: var(--rose-core);
+  color: var(--rose-core);
+}
+
+.policy-btn-label {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.policy-btn-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Modify Sliders Drawer (Visible when MODIFY is active) */
+.policy-sliders-drawer {
+  background: rgba(7, 9, 14, 0.8);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  display: none;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.policy-sliders-drawer.visible {
+  display: flex;
+}
+
+.slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.slider-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.slider-label {
+  color: var(--text-secondary);
+}
+
+.slider-val {
+  color: var(--cyan-core);
+  font-weight: 600;
+}
+
+.custom-range-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  outline: none;
+}
+
+.custom-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cyan-core);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--cyan-core);
+}
+
+/* Consequence Outcome Card */
+.policy-outcome-box {
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid var(--emerald-core);
+  padding: var(--space-lg);
+  border-radius: var(--radius-xs);
+}
+
+.policy-outcome-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--emerald-core);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.policy-outcome-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}

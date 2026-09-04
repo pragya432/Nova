@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVA — The Living Digital Future | Interactive Future City Platform</title>
+  <meta name="description" content="NOVA is an interactive vision of a future city where AI, humans, infrastructure, sustainability, healthcare, education, transportation, energy, and digital governance work together as a living system.">
+
+  <!-- Favicon / Meta -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2307090e'/><circle cx='50' cy='50' r='30' fill='none' stroke='%2300f0ff' stroke-width='8'/><circle cx='50' cy='50' r='12' fill='%238b5cf6'/></svg>">
+
+  <!-- Design System & Modular Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/city-map.css">
+  <link rel="stylesheet" href="css/intelligence.css">
+  <link rel="stylesheet" href="css/simulation.css">
+  <link rel="stylesheet" href="css/human-ai.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/timeline.css">
+  <link rel="stylesheet" href="css/your-nova.css">
+  <link rel="stylesheet" href="css/about-sources.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Third-party Libraries via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ========================================================================
+       STICKY NAVIGATION & SYSTEM STATUS BAR
+       ======================================================================== -->
+  <header class="nova-nav" role="banner">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <a href="#hero" class="nav-logo-link" aria-label="NOVA Homepage">
+          <div class="nav-logo-mark">N</div>
+          <div class="nav-brand-text">
+            <span class="nav-brand-title">NOVA</span>
+            <span class="nav-brand-sub">// LIVING SYSTEM OS</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="nav-menu" role="navigation" aria-label="Main Navigation">
+        <a href="#city" class="nav-link">CITY</a>
+        <a href="#intelligence" class="nav-link">INTELLIGENCE</a>
+        <a href="#simulate" class="nav-link">SIMULATE</a>
+        <a href="#human-ai" class="nav-link">HUMAN + AI</a>
+        <a href="#dashboard" class="nav-link">DASHBOARD</a>
+        <a href="#timeline" class="nav-link">TIMELINE</a>
+        <a href="#about" class="nav-link">ABOUT</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- System Status Indicator -->
+        <div class="system-badge" title="Live system status">
+          <span class="status-pulse"></span>
+          <span>NOVA SYSTEM ONLINE</span>
+        </div>
+
+        <!-- Audio Synthesizer Toggle -->
+        <button id="audio-toggle-btn" class="audio-toggle" aria-label="Toggle synthetic soundscape">
+          <svg class="audio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <span class="audio-text">AUDIO: OFF</span>
+        </button>
+
+        <!-- Primary CTA -->
+        <button id="nav-enter-btn" class="btn btn-primary btn-sm">ENTER NOVA</button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-toggle-btn" class="mobile-toggle" aria-label="Toggle mobile menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" role="main">
+
+    <!-- ========================================================================
+         HERO SECTION: 3D LIVING DIGITAL TWIN CITY
+         ======================================================================== -->
+    <section id="hero" class="hero-section" aria-label="Cinematic City Hero">
+      <!-- Three.js 3D Canvas -->
+      <div class="hero-canvas-container" title="Interactive 3D City — Click and drag to orbit camera">
+        <canvas id="hero-city-canvas"></canvas>
+      </div>
+
+      <div class="hero-overlay-gradient"></div>
+
+      <!-- Real-time HUD Telemetry Overlays -->
+      <div class="hud-stamp hud-stamp-tl">
+        <span>CORE // v4.8.2</span>
+        <span class="hud-value">LAT 37.7749° N • LON 122.4194° W</span>
+      </div>
+
+      <div class="hud-stamp hud-stamp-tr">
+        <span>GRID SYNCHRONIZATION</span>
+        <span class="hud-value" id="hud-freq">60.02 Hz</span>
+      </div>
+
+      <div class="hud-stamp hud-stamp-bl">
+        <span>SENSOR NODES</span>
+        <span class="hud-value">1,280 ACTIVE • 0 FAULTS</span>
+      </div>
+
+      <div class="hud-stamp hud-stamp-br">
+        <span>RENEWABLE FRACTION</span>
+        <span class="hud-value">88.6% CONTINUOUS</span>
+      </div>
+
+      <!-- Hero Typography & Direct Action -->
+      <div class="hero-content">
+        <div class="hero-status-pill hero-interactive-elements">
+          <span class="pulse-dot"></span>
+          <span class="hero-status-text">Living Digital Twin <span>Active</span></span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="hero-title-gradient">NOVA</span>
+        </h1>
+
+        <h2 class="hero-subtitle">
+          The city doesn't wait for the future. It builds it.
+        </h2>
+
+        <p class="hero-description">
+          An interactive vision of urban life where intelligence, infrastructure and humanity work together.
+        </p>
+
+        <div class="hero-cta-group hero-interactive-elements">
+          <button id="hero-enter-btn" class="btn btn-primary">
+            <span>ENTER NOVA</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+          <button id="hero-explore-btn" class="btn btn-secondary">
+            <span>EXPLORE THE VISION</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Interaction Hint -->
+      <div class="hud-interaction-hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 8v8m-4-4h8"></path>
+        </svg>
+        <span>DRAG TO ROTATE 3D CITY • SCROLL TO EXPLORE</span>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 01: THE CITY — INTERACTIVE MAP & ZONE INSPECTOR
+         ======================================================================== -->
+    <section id="city" class="section city-section" aria-label="Interactive City Map">
+      <div class="container-wide">
+        <div class="section-header">
+          <span class="section-tag">SECTION 01 // THE SYSTEM</span>
+          <h2 class="section-title">A city is no longer just infrastructure.<br>It is a living system.</h2>
+          <p class="section-subtitle">
+            Explore NOVA's six foundational urban domains. Click any zone to inspect real-time telemetry, animated flow dynamics, and autonomous orchestration.
+          </p>
+        </div>
+
+        <div class="city-layout">
+          <!-- Left Column: Interactive City Map Viewer -->
+          <div class="city-map-card">
+            <div class="city-map-header">
+              <span class="map-header-title">SPATIAL DIGITAL TWIN // SECTOR MAP</span>
+              <span class="map-feed-status">● LIVE RADAR</span>
+            </div>
+
+            <div class="city-map-viewport">
+              <svg id="city-map-svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet"></svg>
+            </div>
+
+            <!-- Zone Selector Pill Buttons -->
+            <div class="map-zone-pill-group" role="tablist" aria-label="City Zones">
+              <button class="zone-selector-btn active" data-zone="transport" role="tab" aria-selected="true">
+                <span class="zone-dot"></span>
+                <span>01 TRANSPORT</span>
+              </button>
+              <button class="zone-selector-btn" data-zone="energy" role="tab" aria-selected="false">
+                <span class="zone-dot"></span>
+                <span>02 ENERGY</span>
+              </button>
+              <button class="zone-selector-btn" data-zone="healthcare" role="tab" aria-selected="false">
+                <span class="zone-dot"></span>
+                <span>03 HEALTHCARE</span>
+              </button>
+              <button class="zone-selector-btn" data-zone="education" role="tab" aria-selected="false">
+                <span class="zone-dot"></span>
+                <span>04 EDUCATION</span>
+              </button>
+              <button class="zone-selector-btn" data-zone="environment" role="tab" aria-selected="false">
+                <span class="zone-dot"></span>
+                <span>05 ENVIRONMENT</span>
+              </button>
+              <button class="zone-selector-btn" data-zone="governance" role="tab" aria-selected="false">
+                <span class="zone-dot"></span>
+                <span>06 GOVERNANCE</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Zone Inspector Information Panel -->
+          <div class="zone-inspector">
+            <div id="zone-inspector-content" class="zone-inspector-panel panel-cornered" role="tabpanel">
+              <!-- Dynamically populated by js/city-map.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 02: NOVA INTELLIGENCE — "EVERYTHING IS CONNECTED"
+         ======================================================================== -->
+    <section id="intelligence" class="section intel-section" aria-label="NOVA Interconnected Intelligence">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">SECTION 02 // COGNITIVE LATTICE</span>
+          <h2 class="section-title">Everything is connected.</h2>
+          <p class="section-subtitle">
+            NOVA's intelligence is not an isolated supercomputer. It is a unified distributed event mesh linking transportation, power grids, healthcare, education, ecology, and civic governance down to a single outcome: <strong>Citizen Wellbeing</strong>.
+          </p>
+        </div>
+
+        <div class="intel-container">
+          <!-- Interactive Network Topology Visualizer -->
+          <div class="intel-network-box">
+            <div class="intel-network-canvas-wrap">
+              <canvas id="network-topology-canvas"></canvas>
+            </div>
+            <div class="intel-network-status-bar">
+              <div class="intel-live-pulse-text">
+                <span class="status-pulse"></span>
+                <span>DISTRIBUTED MULTI-AGENT PROTOCOL v2.4</span>
+              </div>
+              <div>EVENT LATENCY: <span style="color: #fff; font-weight: 600;">18 MS</span> • ZERO-KNOWLEDGE ENCRYPTED</div>
+            </div>
+          </div>
+
+          <!-- Ripple Effect / Incident Cascade Simulator -->
+          <div class="cascade-simulator-card panel-cornered">
+            <div class="cascade-header">
+              <div>
+                <span class="cascade-badge">INTERACTIVE CASCADE SCENARIO</span>
+                <h3 class="cascade-title">Major Arterial Transit Incident</h3>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 440px;">
+                Walk through a real-time cascading response to see how multi-agent coordination resolves an incident in 4.2 minutes instead of 45+ minutes.
+              </p>
+            </div>
+
+            <!-- 6 Interactive Step Buttons -->
+            <div class="cascade-steps-track" role="tablist">
+              <button class="cascade-step-node active" data-step="0" role="tab">
+                <div class="cascade-node-header">
+                  <span class="cascade-node-idx">STEP 01</span>
+                  <span class="cascade-node-status-dot"></span>
+                </div>
+                <span class="cascade-node-title">Detection</span>
+              </button>
+
+              <button class="cascade-step-node" data-step="1" role="tab">
+                <div class="cascade-node-header">
+                  <span class="cascade-node-idx">STEP 02</span>
+                  <span class="cascade-node-status-dot"></span>
+                </div>
+                <span class="cascade-node-title">Traffic Re-route</span>
+              </button>
+
+              <button class="cascade-step-node" data-step="2" role="tab">
+                <div class="cascade-node-header">
+                  <span class="cascade-node-idx">STEP 03</span>
+                  <span class="cascade-node-status-dot"></span>
+                </div>
+                <span class="cascade-node-title">EMS Dispatch</span>
+              </button>
+
+              <button class="cascade-step-node" data-step="3" role="tab">
+                <div class="cascade-node-header">
+                  <span class="cascade-node-idx">STEP 04</span>
+                  <span class="cascade-node-status-dot"></span>
+                </div>
+                <span class="cascade-node-title">Hospital Alert</span>
+              </button>
+
+              <button class="cascade-step-node" data-step="4" role="tab">
+                <div class="cascade-node-header">
+                  <span class="cascade-node-idx">STEP 05</span>
+                  <span class="cascade-node-status-dot"></span>
+                </div>
+                <span class="cascade-node-title">Citizen Notice</span>
+              </button>
+
+              <button class="cascade-step-node" data-step="5" role="tab">
+                <div class="cascade-node-header">
+                  <span class="cascade-node-idx">STEP 06</span>
+                  <span class="cascade-node-status-dot"></span>
+                </div>
+                <span class="cascade-node-title">Equilibrium</span>
+              </button>
+            </div>
+
+            <!-- Cascade Detail & Telemetry View -->
+            <div class="cascade-detail-panel">
+              <div class="cascade-detail-main">
+                <span id="cascade-step-badge" class="badge badge-cyan" style="margin-bottom: 8px;">STAGE 1 // DETECTION</span>
+                <h4 id="cascade-step-title">LiDAR & Bio-telemetry Anomaly Triggered</h4>
+                <p id="cascade-step-desc">
+                  At 08:42:14, an impact deceleration pulse is recorded on Sector 2 Arterial. Within 40 milliseconds, three intersecting LiDAR surveillance masts cross-verify a vehicle-to-infrastructure incident.
+                </p>
+                <div class="cascade-playback-controls">
+                  <button id="cascade-next-btn" class="btn btn-sm btn-primary">NEXT STEP →</button>
+                  <button id="cascade-auto-btn" class="btn btn-sm btn-secondary">AUTO PLAY</button>
+                </div>
+              </div>
+
+              <div class="cascade-detail-telemetry">
+                <div class="cascade-telemetry-row">
+                  <span class="cascade-telemetry-label">SYSTEM METRICS</span>
+                  <span class="badge badge-violet">REAL-TIME</span>
+                </div>
+                <div class="cascade-telemetry-row">
+                  <span id="cascade-tel-1" class="cascade-telemetry-val">LATENCY: 40 ms</span>
+                </div>
+                <div class="cascade-telemetry-row">
+                  <span id="cascade-tel-2" class="cascade-telemetry-val">CONFIDENCE: 99.8%</span>
+                </div>
+                <div class="cascade-telemetry-row">
+                  <span id="cascade-tel-3" class="cascade-telemetry-val">HUMAN OVERSIGHT: YES</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 03: SHAPE THE FUTURE — INTERACTIVE SIMULATION ENGINE
+         ======================================================================== -->
+    <section id="simulate" class="section simulation-section" aria-label="Shape the Future City Simulation">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">SECTION 03 // EXECUTIVE SIMULATION</span>
+          <h2 class="section-title">The future is a decision.</h2>
+          <p class="section-subtitle">
+            Technology can predict possibilities. Humans decide what matters. Take the helm of NOVA across four realistic urban crises. Every choice has a mathematically defined consequence.
+          </p>
+        </div>
+
+        <div class="sim-container">
+          <!-- Scenario Tabs -->
+          <div class="sim-scenario-tabs" role="tablist">
+            <button class="sim-tab-btn active" data-scenario="0" role="tab">
+              <span class="sim-tab-num">01</span>
+              <span>HEATWAVE</span>
+              <span class="sim-tab-status"></span>
+            </button>
+            <button class="sim-tab-btn" data-scenario="1" role="tab">
+              <span class="sim-tab-num">02</span>
+              <span>TRAFFIC CRISIS</span>
+              <span class="sim-tab-status"></span>
+            </button>
+            <button class="sim-tab-btn" data-scenario="2" role="tab">
+              <span class="sim-tab-num">03</span>
+              <span>ENERGY SHORTAGE</span>
+              <span class="sim-tab-status"></span>
+            </button>
+            <button class="sim-tab-btn" data-scenario="3" role="tab">
+              <span class="sim-tab-num">04</span>
+              <span>HEALTHCARE SURGE</span>
+              <span class="sim-tab-status"></span>
+            </button>
+          </div>
+
+          <!-- Simulation Workbench Grid -->
+          <div class="sim-workbench-grid">
+            <!-- Left: Scenario Situation & Option Selection -->
+            <div class="sim-scenario-box panel-cornered">
+              <div class="sim-alert-banner">
+                <span class="sim-alert-badge">CITY ALERT</span>
+                <span id="sim-badge-text" class="sim-alert-text">MICROCLIMATE SURGE // +5°C SPIKE</span>
+              </div>
+
+              <h3 id="sim-headline-text" class="sim-scenario-headline">Extreme Heatwave Alert</h3>
+              <p id="sim-brief-text" class="sim-scenario-brief">
+                NOVA meteorological sensors project a sustained 5°C temperature spike over the next 72 hours. Grid refrigeration demand is surging by 42%, while vulnerable elderly citizens face severe thermal stress.
+              </p>
+
+              <div id="sim-question-text" class="sim-question-prompt">
+                What should NOVA prioritize to maintain urban equilibrium?
+              </div>
+
+              <!-- 4 Choice Option Cards -->
+              <div id="sim-options-container" class="sim-options-stack">
+                <!-- Injected via js/simulation.js -->
+              </div>
+            </div>
+
+            <!-- Right: Real-time Consequence Breakdown & Deltas -->
+            <div class="sim-results-box panel-cornered">
+              <div class="sim-consequence-header">
+                <span class="sim-consequence-title">CONSEQUENCE TELEMETRY</span>
+                <span class="badge badge-emerald">DETERMINISTIC LOGIC</span>
+              </div>
+
+              <!-- Real-time Metric Delta Badges -->
+              <div id="sim-deltas-container" class="sim-metrics-delta-grid">
+                <!-- Dynamically populated with delta values -->
+              </div>
+
+              <!-- Narrative Trade-off Analysis -->
+              <div id="sim-narrative-content" class="sim-narrative-box">
+                <!-- Injected via js/simulation.js -->
+              </div>
+
+              <div class="sim-stepper-footer">
+                <span id="sim-progress-text" class="sim-progress-text">SIMULATION PROGRESS: 0 / 4 SCENARIOS DECIDED</span>
+                <a href="#your-nova" class="btn btn-sm btn-violet">VIEW CITY PROFILE →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 04: HUMAN + AI — "WHO DECIDES THE FUTURE?"
+         ======================================================================== -->
+    <section id="human-ai" class="section human-ai-section" aria-label="Human Plus AI Philosophy">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">SECTION 04 // GOVERNANCE PHILOSOPHY</span>
+          <h2 class="section-title">Who decides the future?</h2>
+          <p class="section-subtitle">
+            NOVA rejects both techno-chauvinist replacement and nostalgic paralysis. AI models complexity; humans safeguard empathy, values, and accountability.
+          </p>
+        </div>
+
+        <!-- Dual Column Architecture: AI vs HUMAN -->
+        <div class="dual-roles-grid">
+          <div class="role-card role-ai">
+            <div class="role-header">
+              <h3 class="role-title" style="color: var(--cyan-core);">AI</h3>
+              <span class="badge badge-cyan">COMPUTATIONAL CAPACITY</span>
+            </div>
+            <div class="role-list">
+              <div class="role-item">
+                <span class="role-item-dot"></span>
+                <span><strong>Predicts</strong> multi-system climate & demand fluctuations</span>
+              </div>
+              <div class="role-item">
+                <span class="role-item-dot"></span>
+                <span><strong>Analyzes</strong> billions of concurrent telemetry vectors</span>
+              </div>
+              <div class="role-item">
+                <span class="role-item-dot"></span>
+                <span><strong>Simulates</strong> consequences of policy proposals in milliseconds</span>
+              </div>
+              <div class="role-item">
+                <span class="role-item-dot"></span>
+                <span><strong>Optimizes</strong> resource allocations with near-zero friction</span>
+              </div>
+              <div class="role-item">
+                <span class="role-item-dot"></span>
+                <span><strong>Recommends</strong> non-binding policy solutions to human councils</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="role-card role-human">
+            <div class="role-header">
+              <h3 class="role-title" style="color: var(--violet-core);">HUMAN</h3>
+              <span class="badge badge-violet">ETHICAL SOVEREIGNTY</span>
+            </div>
+            <div class="role-list">
+              <div class="role-item">
+                <span class="role-item-dot"></span>
+                <span><strong>Defines</strong> fundamental civic values, dignity & rights</span>
+              </div>
+              <div class="role-item">
+                <span class="role-item-dot"></span>
+                <span><strong>Sets</strong> social priorities and intergenerational goals</span>
+              </div>
+              <div class="role-item">
+                <span class="role-item-dot"></span>
+                <span><strong>Makes</strong> critical moral decisions during life-safety crises</span>
+              </div>
+              <div class="role-item">
+                <span class="role-item-dot"></span>
+                <span><strong>Provides</strong> empathy, contextual listening, and compassion</span>
+              </div>
+              <div class="role-item">
+                <span class="role-item-dot"></span>
+                <span><strong>Takes</strong> legal, political, and historical responsibility</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Synthesis Banner -->
+        <div class="synthesis-banner">
+          <div class="synthesis-tagline">
+            HUMAN + AI: <span>Better decisions, not fewer humans.</span>
+          </div>
+          <p class="synthesis-sub">
+            Technology is the lens; human conscience is the compass.
+          </p>
+        </div>
+
+        <!-- Interactive Ethical Dilemma Simulator -->
+        <div class="policy-dilemma-card panel-cornered">
+          <div class="policy-dilemma-header">
+            <div>
+              <span class="policy-badge">INTERACTIVE ETHICAL CASE</span>
+              <h3 style="font-size: 1.4rem; margin-top: 4px;">Incident #882: Winter Cold Wave & Residential Power Curtailment</h3>
+            </div>
+            <span class="badge badge-cyan">HUMAN EXECUTIVE VETO</span>
+          </div>
+
+          <div class="policy-recommendation-box">
+            <div class="rec-title">ALGORITHMIC PROPOSAL (NOVA PREDICTIVE AGENT)</div>
+            <div class="rec-desc">
+              "To avoid catastrophic regional substation collapse during sub-zero freeze, curtail heating by 4°C across 240,000 residential apartments for 6 hours. Saves 180 MWh; projected grid survival rate: 99.4%."
+            </div>
+          </div>
+
+          <!-- Decision Triad Buttons -->
+          <div class="policy-action-trio">
+            <button class="policy-action-btn btn-accept" data-action="accept">
+              <span class="policy-btn-label">ACCEPT</span>
+              <span class="policy-btn-sub">Enact raw AI recommendation</span>
+            </button>
+
+            <button class="policy-action-btn btn-modify active" data-action="modify">
+              <span class="policy-btn-label">MODIFY</span>
+              <span class="policy-btn-sub">Adjust ethical safety buffers</span>
+            </button>
+
+            <button class="policy-action-btn btn-reject" data-action="reject">
+              <span class="policy-btn-label">REJECT</span>
+              <span class="policy-btn-sub">Executive veto by human council</span>
+            </button>
+          </div>
+
+          <!-- Sliders Drawer for "MODIFY" -->
+          <div id="policy-sliders-drawer" class="policy-sliders-drawer visible">
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <span class="slider-label">Minimum Residential Warmth Floor:</span>
+                <span id="val-warmth" class="slider-val">21°C</span>
+              </div>
+              <input type="range" id="slider-warmth" min="16" max="23" value="21" class="custom-range-slider">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <span class="slider-label">Vulnerable Population Exemption Buffer:</span>
+                <span id="val-vulnerable" class="slider-val">95%</span>
+              </div>
+              <input type="range" id="slider-vulnerable" min="50" max="100" value="95" class="custom-range-slider">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <span class="slider-label">Commercial & Data Center Load Absorption:</span>
+                <span id="val-industrial" class="slider-val">70%</span>
+              </div>
+              <input type="range" id="slider-industrial" min="20" max="100" value="70" class="custom-range-slider">
+            </div>
+          </div>
+
+          <!-- Consequence Outcome Box -->
+          <div id="policy-outcome-content" class="policy-outcome-box">
+            <!-- Dynamically populated by js/human-ai.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 05: CITY DASHBOARD — LIVE TELEMETRY & DIGITAL TWIN MONITOR
+         ======================================================================== -->
+    <section id="dashboard" class="section dashboard-section" aria-label="City Live Dashboard">
+      <div class="container-wide">
+        <div class="section-header">
+          <span class="section-tag">SECTION 05 // SYSTEM TELEMETRY</span>
+          <h2 class="section-title">Live City Dashboard</h2>
+          <p class="section-subtitle">
+            Continuous telemetry feed streaming from 1,280 distributed sensors. These vital indicators respond dynamically to decisions enacted in the simulation.
+          </p>
+        </div>
+
+        <div class="dashboard-container">
+          <!-- Top Header & Live Time -->
+          <div class="dash-header-bar">
+            <div class="dash-status-group">
+              <div class="dash-ticker">SYSTEM CLOCK: <span id="dash-live-clock">--:--:-- UTC</span></div>
+              <div class="dash-ticker">DATA STREAM: <span>SYNCHRONIZED (60 Hz)</span></div>
+            </div>
+            <div class="badge badge-emerald">TELEMETRY NOMINAL // 0 CRITICAL ALERTS</div>
+          </div>
+
+          <!-- 8 Vital Metric Cards -->
+          <div class="dash-metrics-grid">
+            <!-- 1. Population -->
+            <div class="dash-metric-card accent-cyan">
+              <div class="dash-metric-top">
+                <span class="dash-metric-label">POPULATION</span>
+                <svg class="dash-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <div id="dash-val-pop" class="dash-metric-val">2,450,120</div>
+              <div class="dash-metric-meta">
+                <span class="dash-metric-delta pos">↑ +0.3% / mo</span>
+                <span>Active Residents</span>
+              </div>
+            </div>
+
+            <!-- 2. Energy Efficiency -->
+            <div class="dash-metric-card accent-violet">
+              <div class="dash-metric-top">
+                <span class="dash-metric-label">ENERGY EFFICIENCY</span>
+                <svg class="dash-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+              <div id="dash-val-energy" class="dash-metric-val">92.4%</div>
+              <div class="dash-metric-meta">
+                <span class="dash-metric-delta pos">↑ Sub-1% Loss</span>
+                <span>Smart Grid Lattice</span>
+              </div>
+            </div>
+
+            <!-- 3. Air Quality -->
+            <div class="dash-metric-card accent-emerald">
+              <div class="dash-metric-top">
+                <span class="dash-metric-label">AIR QUALITY INDEX</span>
+                <svg class="dash-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <div id="dash-val-aqi" class="dash-metric-val">14</div>
+              <div class="dash-metric-meta">
+                <span class="dash-metric-delta pos">● Optimal PM2.5</span>
+                <span>Forest Canopy</span>
+              </div>
+            </div>
+
+            <!-- 4. Traffic -->
+            <div class="dash-metric-card accent-cyan">
+              <div class="dash-metric-top">
+                <span class="dash-metric-label">TRAFFIC CONGESTION</span>
+                <svg class="dash-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="1" y="3" width="15" height="13"></rect>
+                  <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                  <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                  <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                </svg>
+              </div>
+              <div id="dash-val-traffic" class="dash-metric-val">12%</div>
+              <div class="dash-metric-meta">
+                <span class="dash-metric-delta pos">↓ -68% Legacy</span>
+                <span>Autonomous Mesh</span>
+              </div>
+            </div>
+
+            <!-- 5. Healthcare Response -->
+            <div class="dash-metric-card accent-rose">
+              <div class="dash-metric-top">
+                <span class="dash-metric-label">HEALTHCARE EMS</span>
+                <svg class="dash-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+              </div>
+              <div id="dash-val-health" class="dash-metric-val">3.4 min</div>
+              <div class="dash-metric-meta">
+                <span class="dash-metric-delta pos">↓ -58% Baseline</span>
+                <span>Drone Triage Active</span>
+              </div>
+            </div>
+
+            <!-- 6. Renewable Energy -->
+            <div class="dash-metric-card accent-emerald">
+              <div class="dash-metric-top">
+                <span class="dash-metric-label">RENEWABLE MIX</span>
+                <svg class="dash-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                </svg>
+              </div>
+              <div id="dash-val-renew" class="dash-metric-val">88.6%</div>
+              <div class="dash-metric-meta">
+                <span class="dash-metric-delta pos">↑ Solar / Geothermal</span>
+                <span>Zero Hydrocarbon</span>
+              </div>
+            </div>
+
+            <!-- 7. Citizen Wellbeing -->
+            <div class="dash-metric-card accent-violet">
+              <div class="dash-metric-top">
+                <span class="dash-metric-label">CITIZEN WELLBEING</span>
+                <svg class="dash-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </div>
+              <div id="dash-val-wellbeing" class="dash-metric-val">91%</div>
+              <div class="dash-metric-meta">
+                <span class="dash-metric-delta pos">↑ Continuous Poll</span>
+                <span>Equitable Access</span>
+              </div>
+            </div>
+
+            <!-- 8. Sustainability Score -->
+            <div class="dash-metric-card accent-cyan">
+              <div class="dash-metric-top">
+                <span class="dash-metric-label">SUSTAINABILITY INDEX</span>
+                <svg class="dash-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div id="dash-val-sustainability" class="dash-metric-val">89%</div>
+              <div class="dash-metric-meta">
+                <span class="dash-metric-delta pos">Net Carbon Sink</span>
+                <span>Biosphere Alignment</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Row -->
+          <div class="dash-charts-row">
+            <div class="dash-chart-card panel-cornered">
+              <div class="dash-chart-header">
+                <span class="dash-chart-title">24-HOUR ENERGY OUTPUT VS CITIZEN WELLBEING TREND</span>
+                <span class="badge badge-cyan">TELEMETRY CHART</span>
+              </div>
+              <div class="dash-canvas-container">
+                <canvas id="dash-trend-canvas"></canvas>
+              </div>
+            </div>
+
+            <div class="dash-chart-card panel-cornered">
+              <div class="dash-chart-header">
+                <span class="dash-chart-title">CORE EQUILIBRIUM ALLOCATIONS</span>
+                <span class="badge badge-violet">SYNCHRONIZED</span>
+              </div>
+              <div class="dash-breakdown-list">
+                <div class="dash-breakdown-item">
+                  <div class="breakdown-label-row">
+                    <span style="color: var(--text-muted);">Smart Grid Efficiency</span>
+                    <span style="color: var(--cyan-core); font-weight: 600;">92%</span>
+                  </div>
+                  <div class="breakdown-bar-bg">
+                    <div id="bar-energy" class="breakdown-bar-fill" style="width: 92%; background: var(--cyan-core);"></div>
+                  </div>
+                </div>
+
+                <div class="dash-breakdown-item">
+                  <div class="breakdown-label-row">
+                    <span style="color: var(--text-muted);">Ecological Regeneracy</span>
+                    <span style="color: var(--emerald-core); font-weight: 600;">89%</span>
+                  </div>
+                  <div class="breakdown-bar-bg">
+                    <div id="bar-sustainability" class="breakdown-bar-fill" style="width: 89%; background: var(--emerald-core);"></div>
+                  </div>
+                </div>
+
+                <div class="dash-breakdown-item">
+                  <div class="breakdown-label-row">
+                    <span style="color: var(--text-muted);">Public Trust & Safety</span>
+                    <span style="color: var(--violet-core); font-weight: 600;">91%</span>
+                  </div>
+                  <div class="breakdown-bar-bg">
+                    <div id="bar-wellbeing" class="breakdown-bar-fill" style="width: 91%; background: var(--violet-core);"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 06: FUTURE TIMELINE — 2026 TO 2050
+         ======================================================================== -->
+    <section id="timeline" class="section timeline-section" aria-label="Future Timeline Pathways">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">SECTION 06 // EVOLUTIONARY TRAJECTORY</span>
+          <h2 class="section-title">2026 → 2030 → 2035 → 2040 → 2050</h2>
+          <p class="section-subtitle">
+            Explore how today's technology could evolve into tomorrow's urban systems. This is not a rigid prediction, but an architectural roadmap from experimental sensors to a fully symbiotic human city.
+          </p>
+        </div>
+
+        <div class="timeline-container">
+          <!-- Timeline Track Scrubber -->
+          <div class="timeline-track-wrapper panel-cornered">
+            <div class="timeline-track-rail">
+              <div class="timeline-rail-line"></div>
+              <div id="timeline-rail-progress" class="timeline-rail-progress" style="width: 0%;"></div>
+
+              <button class="timeline-year-node active reached" data-year="2026" aria-label="Year 2026">
+                <span class="timeline-node-pin"></span>
+                <span class="timeline-year-label">2026</span>
+              </button>
+
+              <button class="timeline-year-node" data-year="2030" aria-label="Year 2030">
+                <span class="timeline-node-pin"></span>
+                <span class="timeline-year-label">2030</span>
+              </button>
+
+              <button class="timeline-year-node" data-year="2035" aria-label="Year 2035">
+                <span class="timeline-node-pin"></span>
+                <span class="timeline-year-label">2035</span>
+              </button>
+
+              <button class="timeline-year-node" data-year="2040" aria-label="Year 2040">
+                <span class="timeline-node-pin"></span>
+                <span class="timeline-year-label">2040</span>
+              </button>
+
+              <button class="timeline-year-node" data-year="2050" aria-label="Year 2050">
+                <span class="timeline-node-pin"></span>
+                <span class="timeline-year-label">2050</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Era Headline -->
+          <div class="timeline-era-header">
+            <div class="era-headline-group">
+              <span id="era-year-badge" class="era-year-badge">HORIZON // YEAR 2026</span>
+              <h3 id="era-title" class="era-title">Foundational Sensor Mesh & Human-in-the-Loop AI</h3>
+            </div>
+            <p id="era-desc" class="era-theme-desc">
+              First-generation municipal digital twins map physical infrastructure. AI acts primarily as a diagnostic advisor to human city managers.
+            </p>
+          </div>
+
+          <!-- 6 Sector Evolution Cards -->
+          <div id="timeline-cards-container" class="timeline-cards-grid">
+            <!-- Dynamically populated by js/timeline.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 07: YOUR NOVA — CITY PROFILE ARCHETYPE & RADAR
+         ======================================================================== -->
+    <section id="your-nova" class="section your-nova-section" aria-label="Your NOVA Profile">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">SECTION 07 // EXECUTIVE APPRAISAL</span>
+          <h2 class="section-title">Your City Profile</h2>
+          <p class="section-subtitle">
+            Based on your tactical and ethical decisions across the four crises, here is the architectural soul of the NOVA you engineered.
+          </p>
+        </div>
+
+        <div class="profile-card-wrapper panel-cornered">
+          <div class="profile-grid">
+            <!-- Left: Archetype Profile & Narrative -->
+            <div class="profile-narrative">
+              <div class="archetype-badge">DESIGNED ARCHETYPE</div>
+              <h3 id="profile-archetype-title" class="archetype-title">The Symbiotic Architect</h3>
+
+              <div id="profile-verdict-quote" class="profile-verdict-quote">
+                "You didn't just explore the future. You designed it."
+              </div>
+
+              <p id="profile-archetype-desc" class="archetype-description">
+                Your decisions favored holistic equilibrium, peer-to-peer collaboration, and long-term environmental restoration over brute efficiency. NOVA thrives under your vision as a living garden of computational wisdom.
+              </p>
+
+              <!-- 5 Dimension Progress Meters -->
+              <div class="profile-scores-stack">
+                <div class="score-meter-item">
+                  <div class="score-meta-row">
+                    <span class="score-name">Sustainability</span>
+                    <span id="prof-val-sust" class="score-value">89%</span>
+                  </div>
+                  <div class="score-track">
+                    <div id="prof-fill-sust" class="score-fill" style="width: 89%;"></div>
+                  </div>
+                </div>
+
+                <div class="score-meter-item">
+                  <div class="score-meta-row">
+                    <span class="score-name">Safety</span>
+                    <span id="prof-val-safe" class="score-value">90%</span>
+                  </div>
+                  <div class="score-track">
+                    <div id="prof-fill-safe" class="score-fill" style="width: 90%;"></div>
+                  </div>
+                </div>
+
+                <div class="score-meter-item">
+                  <div class="score-meta-row">
+                    <span class="score-name">Efficiency</span>
+                    <span id="prof-val-eff" class="score-value">92%</span>
+                  </div>
+                  <div class="score-track">
+                    <div id="prof-fill-eff" class="score-fill" style="width: 92%;"></div>
+                  </div>
+                </div>
+
+                <div class="score-meter-item">
+                  <div class="score-meta-row">
+                    <span class="score-name">Innovation</span>
+                    <span id="prof-val-inno" class="score-value">85%</span>
+                  </div>
+                  <div class="score-track">
+                    <div id="prof-fill-inno" class="score-fill" style="width: 85%;"></div>
+                  </div>
+                </div>
+
+                <div class="score-meter-item">
+                  <div class="score-meta-row">
+                    <span class="score-name">Human Wellbeing</span>
+                    <span id="prof-val-well" class="score-value">91%</span>
+                  </div>
+                  <div class="score-track">
+                    <div id="prof-fill-well" class="score-fill" style="width: 91%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CTAs -->
+              <div class="profile-actions-bar">
+                <button id="btn-rebuild-nova" class="btn rebuild-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                  </svg>
+                  <span>REBUILD NOVA (RESET SIMULATION)</span>
+                </button>
+                <button id="btn-export-profile" class="btn btn-secondary">
+                  <span>SHARE CITY PROFILE</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Radar Chart Visualization -->
+            <div class="profile-radar-card">
+              <span class="badge badge-cyan" style="position: absolute; top: 16px; left: 16px;">SPIDER EVALUATION</span>
+              <div class="profile-radar-canvas-container">
+                <canvas id="profile-radar-chart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ABOUT / VISION MANIFESTO
+         ======================================================================== -->
+    <section id="about" class="section about-section" aria-label="About and Vision">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">VISION // MANIFESTO</span>
+          <h2 class="section-title">The Principles of Symbiotic Urbanism</h2>
+          <p class="section-subtitle">
+            NOVA does not claim that algorithms will magically solve every human challenge. Instead, it demonstrates how computational intelligence can shoulder systemic complexity so humans can focus on what matters most.
+          </p>
+        </div>
+
+        <div class="vision-pillars-grid">
+          <div class="vision-pillar-card panel-cornered">
+            <span class="pillar-num">01 // INTERCONNECTED SYSTEMS</span>
+            <h3 class="pillar-title">Dissolving Bureaucratic Silos</h3>
+            <p class="pillar-text">
+              Cities suffer when transit, power, and healthcare operate in isolated vacuums. Interconnected event lattices ensure that an energy dip immediately alerts hospitals, water purification, and autonomous transport.
+            </p>
+          </div>
+
+          <div class="vision-pillar-card panel-cornered">
+            <span class="pillar-num">02 // HUMAN-IN-THE-LOOP</span>
+            <h3 class="pillar-title">Augmentation, Not Abdication</h3>
+            <p class="pillar-text">
+              AI should never replace elected municipal accountability or human ethical choice. The algorithm simulates scenarios and flags second-order consequences; human citizen assemblies retain final veto authority.
+            </p>
+          </div>
+
+          <div class="vision-pillar-card panel-cornered">
+            <span class="pillar-num">03 // BIOSPHERE METABOLISM</span>
+            <h3 class="pillar-title">Radical Closed-Loop Living</h3>
+            <p class="pillar-text">
+              True future cities cannot treat nature as an exterior resource to be consumed. NOVA treats energy, water, carbon, and materials as cyclical biological flows that leave the regional ecosystem cleaner each decade.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SOURCES & RESEARCH GROUNDING
+         ======================================================================== -->
+    <section id="sources" class="section sources-section" aria-label="Credible Sources and Grounding">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">GROUNDING // RESEARCH SOURCES</span>
+          <h2 class="section-title">Real Science vs Future Concept</h2>
+          <p class="section-subtitle">
+            To ensure intellectual integrity, NOVA explicitly distinguishes between real-world technologies deployed today and forward-looking concepts envisioned for 2030–2050.
+          </p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="sources-tabs-header">
+          <button class="sources-tab-btn active" data-filter="all">ALL SOURCES (6)</button>
+          <button class="sources-tab-btn" data-filter="real">REAL TECHNOLOGY</button>
+          <button class="sources-tab-btn" data-filter="concept">NOVA FUTURE CONCEPT</button>
+        </div>
+
+        <!-- Filterable Table -->
+        <div class="sources-table-wrapper">
+          <table class="sources-table" summary="Credible research sources and technological grounding">
+            <thead>
+              <tr>
+                <th>DOMAIN & TECHNOLOGY</th>
+                <th>CLASSIFICATION</th>
+                <th>RESEARCH SOURCE & CITATION</th>
+                <th>REAL-WORLD IMPLEMENTATION CONTEXT</th>
+              </tr>
+            </thead>
+            <tbody id="sources-table-body">
+              <!-- Dynamically populated by js/main.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       FOOTER & AI USAGE DISCLOSURE
+       ======================================================================== -->
+  <footer class="nova-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <div class="footer-logo">NOVA</div>
+          <p class="footer-tagline">
+            The city doesn't wait for the future. It builds it.
+          </p>
+          <div class="badge badge-cyan" style="align-self: flex-start;">LIVING SYSTEM PROTOTYPE</div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">SECTORS</div>
+          <ul class="footer-links-list">
+            <li><a href="#city" class="footer-link">Autonomous Transit</a></li>
+            <li><a href="#city" class="footer-link">Clean Energy Grid</a></li>
+            <li><a href="#city" class="footer-link">Connected Healthcare</a></li>
+            <li><a href="#city" class="footer-link">Adaptive Education</a></li>
+            <li><a href="#city" class="footer-link">Closed-Loop Biosphere</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">INTERACTIONS</div>
+          <ul class="footer-links-list">
+            <li><a href="#intelligence" class="footer-link">Network Topology</a></li>
+            <li><a href="#simulate" class="footer-link">Crisis Simulation</a></li>
+            <li><a href="#human-ai" class="footer-link">Policy Modifier</a></li>
+            <li><a href="#dashboard" class="footer-link">Live Telemetry</a></li>
+            <li><a href="#your-nova" class="footer-link">Your City Profile</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">TELEMETRY</div>
+          <ul class="footer-links-list">
+            <li class="mono-telemetry" style="color: var(--cyan-core);">STATUS: ONLINE</li>
+            <li class="mono-telemetry">LAT 37.7749° N</li>
+            <li class="mono-telemetry">LON 122.4194° W</li>
+            <li class="mono-telemetry">FREQ: 60.02 HZ</li>
+            <li class="mono-telemetry">NODES: 1,280</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- AI Usage Disclosure Box -->
+      <div class="ai-disclosure-card">
+        <div class="ai-disclosure-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span>AI Usage Disclosure</span>
+        </div>
+        <p class="ai-disclosure-text">
+          AI tools were used for brainstorming, design ideation, code assistance and debugging. The final concept, design decisions, implementation, customization and testing were reviewed and completed by the participant.
+        </p>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom-bar">
+        <div>© 2026 NOVA URBAN RESEARCH INITIATIVE. ALL RIGHTS RESERVED.</div>
+        <div>DESIGN THE DIGITAL FUTURE • COMPETITION ENTRY</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic Modules -->
+  <script src="js/config.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/city-3d.js"></script>
+  <script src="js/city-map.js"></script>
+  <script src="js/network-graph.js"></script>
+  <script src="js/simulation.js"></script>
+  <script src="js/human-ai.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/timeline.js"></script>
+  <script src="js/your-nova.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+/* ==========================================================================
+   SECTION 05: CITY DASHBOARD — LIVE TELEMETRY & DIGITAL TWIN MONITOR
+   ========================================================================== */
+
+.dashboard-section {
+  position: relative;
+  background: var(--bg-core);
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+/* Dashboard Header & System Clock */
+.dash-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-xl);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.dash-status-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.dash-ticker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.dash-ticker span {
+  color: var(--cyan-core);
+  font-weight: 600;
+}
+
+/* 8 Core Metrics Grid */
+.dash-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+.dash-metric-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-lg);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+}
+
+.dash-metric-card:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-surface-elevated);
+}
+
+.dash-metric-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: transparent;
+  transition: background-color var(--transition-base);
+}
+
+.dash-metric-card.accent-cyan::after { background: var(--cyan-core); }
+.dash-metric-card.accent-violet::after { background: var(--violet-core); }
+.dash-metric-card.accent-emerald::after { background: var(--emerald-core); }
+.dash-metric-card.accent-amber::after { background: var(--amber-core); }
+
+.dash-metric-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xs);
+}
+
+.dash-metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.dash-metric-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+}
+
+.dash-metric-val {
+  font-family: var(--font-mono);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  margin: var(--space-xs) 0;
+}
+
+.dash-metric-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.dash-metric-delta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dash-metric-delta.pos { color: var(--emerald-core); }
+.dash-metric-delta.neg { color: var(--rose-core); }
+
+/* Charts & Detailed Telemetry Row */
+.dash-charts-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--space-xl);
+}
+
+.dash-chart-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.dash-chart-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.dash-canvas-container {
+  width: 100%;
+  height: 260px;
+  position: relative;
+}
+
+/* Secondary Radial / Breakdown Card */
+.dash-breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.dash-breakdown-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.breakdown-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.breakdown-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.breakdown-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-smooth);
+}

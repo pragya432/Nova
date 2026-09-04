@@ -1,0 +1,166 @@
+/* ==========================================================================
+   SECTION 07: YOUR NOVA — CITY PROFILE ARCHETYPE & RADAR EVALUATION
+   ========================================================================== */
+
+.your-nova-section {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, #101624 0%, var(--bg-core) 100%);
+}
+
+.profile-card-wrapper {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-3xl);
+  box-shadow: 0 0 50px rgba(0, 240, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+
+/* Left: Archetype Profile Statement & Scores */
+.profile-narrative {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.archetype-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid var(--cyan-core);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--cyan-core);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  align-self: flex-start;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+}
+
+.archetype-title {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1.08;
+}
+
+.profile-verdict-quote {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: #ffffff;
+  border-left: 3px solid var(--cyan-core);
+  padding-left: var(--space-md);
+  line-height: 1.4;
+}
+
+.profile-verdict-quote span {
+  color: var(--cyan-core);
+}
+
+.archetype-description {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* 5 Dimension Progress Meters */
+.profile-scores-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.score-meter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.score-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.score-name {
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.score-value {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.score-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(to right, var(--cyan-core), var(--violet-core));
+  transition: width var(--transition-slow);
+}
+
+/* Right: Radar Chart Visualization */
+.profile-radar-card {
+  background: rgba(7, 9, 14, 0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.profile-radar-canvas-container {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+
+#profile-radar-chart {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Action CTAs */
+.profile-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.rebuild-btn {
+  background: var(--violet-core);
+  border-color: var(--violet-core);
+  color: #fff;
+}
+
+.rebuild-btn:hover {
+  background: #9d75f8;
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
+}

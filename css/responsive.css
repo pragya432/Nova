@@ -1,0 +1,182 @@
+/* ==========================================================================
+   RESPONSIVE DESIGN & TOUCH INTERACTION STYLES
+   ========================================================================== */
+
+/* Laptop & Medium Screens (max-width: 1200px) */
+@media (max-width: 1200px) {
+  .city-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .city-map-card {
+    position: relative;
+    top: 0;
+  }
+
+  .sim-workbench-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dash-charts-row {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-radar-card {
+    order: -1;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Tablet & Mobile Screens (max-width: 900px) */
+@media (max-width: 900px) {
+  :root {
+    --space-4xl: 4rem;
+    --space-3xl: 3rem;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    width: 100%;
+    background: rgba(7, 9, 14, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-medium);
+    flex-direction: column;
+    padding: var(--space-xl);
+    gap: var(--space-lg);
+    transform: translateY(-120%);
+    transition: transform var(--transition-base);
+    z-index: 45;
+  }
+
+  .nav-menu.open {
+    transform: translateY(0);
+  }
+
+  .mobile-toggle {
+    display: flex;
+  }
+
+  .system-badge {
+    display: none; /* Hide on tight tablet nav */
+  }
+
+  .dual-roles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dual-roles-grid::after {
+    display: none;
+  }
+
+  .policy-action-trio {
+    grid-template-columns: 1fr;
+  }
+
+  .cascade-steps-track {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cascade-detail-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .cascade-detail-telemetry {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+    padding-left: 0;
+    padding-top: var(--space-md);
+  }
+
+  .hud-stamp-tl, .hud-stamp-tr, .hud-stamp-bl, .hud-stamp-br {
+    display: none; /* Keep hero clean on mobile */
+  }
+
+  .vision-pillars-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile Screens (max-width: 600px) */
+@media (max-width: 600px) {
+  .container, .container-wide {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+
+  .zone-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cascade-steps-track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .timeline-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-track-rail {
+    overflow-x: auto;
+    padding: var(--space-sm) 0;
+  }
+
+  .energy-flow-chain {
+    flex-direction: column;
+  }
+
+  .energy-flow-arrow {
+    transform: rotate(90deg);
+    margin: 4px 0;
+  }
+
+  .education-compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-metrics-delta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-card-wrapper {
+    padding: var(--space-xl) var(--space-md);
+  }
+}

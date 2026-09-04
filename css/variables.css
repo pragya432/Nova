@@ -1,0 +1,86 @@
+/* ==========================================================================
+   NOVA DESIGN SYSTEM — VARIABLES & DESIGN TOKENS
+   Theme: "Design the Digital Future"
+   ========================================================================== */
+
+:root {
+  /* Color Palette — Deep Charcoal, Electric Accents, Natural Tones */
+  --bg-core: #07090e;
+  --bg-surface: #0e121a;
+  --bg-surface-elevated: #151b26;
+  --bg-surface-glass: rgba(14, 18, 26, 0.78);
+  --bg-card: rgba(21, 27, 38, 0.85);
+  --bg-card-hover: rgba(28, 36, 51, 0.95);
+
+  /* Borders & Dividers */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-accent: rgba(0, 240, 255, 0.35);
+  --border-violet: rgba(139, 92, 246, 0.35);
+  --border-green: rgba(16, 185, 129, 0.35);
+
+  /* Primary Accents */
+  --cyan-core: #00f0ff;
+  --cyan-dim: #00b4cc;
+  --cyan-glow: rgba(0, 240, 255, 0.22);
+  --violet-core: #8b5cf6;
+  --violet-glow: rgba(139, 92, 246, 0.22);
+  --emerald-core: #10b981;
+  --emerald-glow: rgba(16, 185, 129, 0.22);
+  --amber-core: #f59e0b;
+  --amber-glow: rgba(245, 158, 11, 0.22);
+  --rose-core: #f43f5e;
+  --rose-glow: rgba(244, 63, 94, 0.22);
+
+  /* Typography Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --text-dim: #475569;
+  --text-accent: #00f0ff;
+
+  /* Typography Font Stacks */
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, 'Fira Code', monospace;
+
+  /* Spacing Scale */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4.5rem;
+  --space-4xl: 6rem;
+
+  /* Elevations & Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.65);
+  --shadow-cyan: 0 0 30px rgba(0, 240, 255, 0.15);
+  --shadow-violet: 0 0 30px rgba(139, 92, 246, 0.15);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 700ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Border Radii */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Z-Index Hierarchy */
+  --z-canvas: 1;
+  --z-base: 10;
+  --z-elevated: 20;
+  --z-nav: 50;
+  --z-modal: 100;
+  --z-toast: 150;
+}

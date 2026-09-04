@@ -1,0 +1,375 @@
+/* ==========================================================================
+   SECTION 01: THE CITY — INTERACTIVE CITY MAP & ZONE INSPECTOR
+   ========================================================================== */
+
+.city-section {
+  position: relative;
+  background: var(--bg-core);
+}
+
+.city-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   Interactive City Map Viewer (Left Column)
+   -------------------------------------------------------------------------- */
+.city-map-card {
+  position: sticky;
+  top: 96px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.city-map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(14, 18, 26, 0.9);
+}
+
+.map-header-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.map-header-title::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--cyan-core);
+  border-radius: 2px;
+}
+
+.map-feed-status {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--emerald-core);
+  letter-spacing: 0.05em;
+}
+
+/* Map SVG / Canvas Viewport */
+.city-map-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: radial-gradient(circle at 50% 50%, #121824 0%, #080a0f 100%);
+  overflow: hidden;
+}
+
+#city-map-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Zone Buttons / Overlay Selectors */
+.map-zone-pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-lg);
+  background: rgba(7, 9, 14, 0.8);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.zone-selector-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all var(--transition-fast);
+}
+
+.zone-selector-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.zone-selector-btn.active {
+  background: rgba(0, 240, 255, 0.12);
+  border-color: var(--cyan-core);
+  color: var(--cyan-core);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+}
+
+.zone-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--text-muted);
+}
+
+.zone-selector-btn.active .zone-dot {
+  background-color: var(--cyan-core);
+  box-shadow: 0 0 8px var(--cyan-core);
+}
+
+/* --------------------------------------------------------------------------
+   Zone Inspector Information Panel (Right Column)
+   -------------------------------------------------------------------------- */
+.zone-inspector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.zone-inspector-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+.zone-meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.zone-index-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--cyan-core);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.zone-inspector-title {
+  font-size: 1.85rem;
+  margin-bottom: var(--space-xs);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.zone-inspector-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+}
+
+/* Telemetry Grid within Zone */
+.zone-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.zone-stat-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.zone-stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.zone-stat-value {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.zone-stat-delta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--emerald-core);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Zone Specific Interactive Visualizers */
+.zone-interactive-widget {
+  background: rgba(7, 9, 14, 0.6);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: var(--space-lg);
+  margin-top: var(--space-md);
+}
+
+.widget-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 1. Energy Flow Diagram */
+.energy-flow-chain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  position: relative;
+  padding: var(--space-sm) 0;
+}
+
+.energy-node {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 10px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.energy-node .node-name {
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.energy-node .node-val {
+  color: var(--cyan-core);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.energy-flow-arrow {
+  color: var(--violet-core);
+  animation: arrowPulse 1.5s infinite ease-in-out;
+}
+
+@keyframes arrowPulse {
+  0%, 100% { transform: translateX(0); opacity: 0.5; }
+  50% { transform: translateX(3px); opacity: 1; }
+}
+
+/* 2. Healthcare Emergency Scenario Flow */
+.scenario-step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.scenario-step-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  transition: all var(--transition-fast);
+}
+
+.scenario-step-item.active {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: var(--violet-core);
+}
+
+.scenario-step-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+}
+
+.scenario-step-item.active .scenario-step-num {
+  background: var(--violet-core);
+  color: #fff;
+}
+
+.scenario-step-label {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* 3. Education Adaptive Visualizer */
+.education-compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.edu-card {
+  padding: var(--space-md);
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-subtle);
+}
+
+.edu-card-traditional {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.edu-card-adaptive {
+  background: rgba(0, 240, 255, 0.06);
+  border-color: var(--border-accent);
+}
+
+.edu-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.edu-card-traditional .edu-tag { color: var(--text-muted); }
+.edu-card-adaptive .edu-tag { color: var(--cyan-core); }
+
+.edu-card ul {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}

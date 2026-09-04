@@ -1,0 +1,198 @@
+/* ==========================================================================
+   SECTION 06: FUTURE TIMELINE — 2026 TO 2050 EVOLUTIONARY PATHWAYS
+   ========================================================================== */
+
+.timeline-section {
+  position: relative;
+  background: radial-gradient(circle at 50% 80%, #0d131f 0%, var(--bg-core) 100%);
+}
+
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
+}
+
+/* Scrubber / Year Progression Bar */
+.timeline-track-wrapper {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl) var(--space-2xl);
+  position: relative;
+}
+
+.timeline-track-rail {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: var(--space-lg) 0;
+}
+
+.timeline-rail-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.timeline-rail-progress {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--cyan-core), var(--violet-core));
+  transform: translateY(-50%);
+  z-index: 2;
+  transition: width var(--transition-smooth);
+}
+
+.timeline-year-node {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.timeline-node-pin {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-medium);
+  transition: all var(--transition-base);
+}
+
+.timeline-year-node:hover .timeline-node-pin {
+  border-color: var(--cyan-core);
+  transform: scale(1.2);
+}
+
+.timeline-year-node.active .timeline-node-pin {
+  background: var(--cyan-core);
+  border-color: #ffffff;
+  box-shadow: 0 0 16px var(--cyan-core);
+  transform: scale(1.35);
+}
+
+.timeline-year-label {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: color var(--transition-base);
+}
+
+.timeline-year-node.active .timeline-year-label {
+  color: #ffffff;
+}
+
+.timeline-year-node.reached .timeline-node-pin {
+  border-color: var(--cyan-core);
+}
+
+/* Timeline Content Cards Grid (6 Sectors) */
+.timeline-era-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-md);
+}
+
+.era-headline-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.era-year-badge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--cyan-core);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.era-title {
+  font-size: 2rem;
+}
+
+.era-theme-desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+}
+
+/* 6 Sector Progression Cards */
+.timeline-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+.timeline-sector-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xl);
+  transition: all var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.timeline-sector-card:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-surface-elevated);
+  transform: translateY(-2px);
+}
+
+.sector-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sector-name {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--cyan-core);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sector-milestone-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.sector-milestone-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.sector-status-pill {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  align-self: flex-start;
+  margin-top: auto;
+}
