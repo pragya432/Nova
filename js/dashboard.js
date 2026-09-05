@@ -104,6 +104,17 @@ class NovaDashboard {
       const { metrics } = e.detail;
       this.updateMetrics(metrics);
     });
+
+    window.addEventListener('nova:city-changed', (e) => {
+      const { city } = e.detail;
+      if (!city) return;
+      const elCity = document.getElementById('dash-city-name');
+      if (elCity) elCity.textContent = city.name.toUpperCase();
+      this.currentPopulation = city.metrics.population;
+      const popEl = document.getElementById('dash-val-pop');
+      if (popEl) popEl.textContent = this.currentPopulation.toLocaleString();
+      this.updateMetrics(city.metrics);
+    });
   }
 
   updateMetrics(m) {
@@ -115,11 +126,15 @@ class NovaDashboard {
     const elWellbeing = document.getElementById('dash-val-wellbeing');
     const elSustainability = document.getElementById('dash-val-sustainability');
 
+    const activeCity = window.NOVA_CONFIG ? window.NOVA_CONFIG.getActiveCity() : null;
+    const baseAqi = activeCity ? activeCity.metrics.airQualityIndex : 68;
+    const sustRatio = 100 / Math.max(30, m.sustainability);
+
     if (elEnergy) elEnergy.textContent = `${m.efficiency.toFixed(1)}%`;
-    if (elAqi) elAqi.textContent = Math.round(14 * (100 / m.sustainability));
-    if (elTraffic) elTraffic.textContent = `${Math.max(4, Math.round(25 - (m.efficiency * 0.15)))}%`;
+    if (elAqi) elAqi.textContent = Math.round(baseAqi * (sustRatio * 0.8 + 0.2));
+    if (elTraffic) elTraffic.textContent = `${Math.max(4, Math.round(35 - (m.efficiency * 0.2)))}%`;
     if (elHealthcare) elHealthcare.textContent = `${(5.5 - (m.safety * 0.025)).toFixed(1)} min`;
-    if (elRenewable) elRenewable.textContent = `${(m.sustainability * 0.98).toFixed(1)}%`;
+    if (elRenewable) elRenewable.textContent = `${Math.min(99.9, m.sustainability * 0.96).toFixed(1)}%`;
     if (elWellbeing) elWellbeing.textContent = `${m.wellbeing}%`;
     if (elSustainability) elSustainability.textContent = `${m.sustainability}%`;
 
@@ -141,12 +156,15 @@ class NovaDashboard {
   }
 
   startLiveTickers() {
-    // Dynamic population live tick
+    // Dynamic population live tick based on current active city
     const popEl = document.getElementById('dash-val-pop');
-    let pop = 2450120;
+    const activeCity = window.NOVA_CONFIG ? window.NOVA_CONFIG.getActiveCity() : null;
+    this.currentPopulation = activeCity ? activeCity.metrics.population : 840000;
+    if (popEl) popEl.textContent = this.currentPopulation.toLocaleString();
+
     setInterval(() => {
-      pop += Math.floor(Math.random() * 3) - 1;
-      if (popEl) popEl.textContent = pop.toLocaleString();
+      this.currentPopulation += Math.floor(Math.random() * 3) - 1;
+      if (popEl) popEl.textContent = this.currentPopulation.toLocaleString();
     }, 3500);
 
     // Dynamic simulation timestamp clock

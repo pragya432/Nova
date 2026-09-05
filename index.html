@@ -684,6 +684,679 @@ img, svg, canvas {
 }
 
 
+/* --- city-selector.css --- */
+/* ==========================================================================
+   NOVA CITY-FIRST INTELLIGENCE — STYLESHEET
+   City Selection Modal, Navbar Switcher, Localized Profile & Analyzed Challenges
+   Theme: "Design the Digital Future"
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. City Selector Modal Overlay
+   -------------------------------------------------------------------------- */
+.city-selector-modal {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(4, 6, 10, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: var(--z-modal, 9999);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.city-selector-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.city-modal-dialog {
+  width: 100%;
+  max-width: 680px;
+  background: rgba(14, 18, 26, 0.95);
+  border: 1px solid var(--border-accent);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85),
+              0 0 50px rgba(0, 240, 255, 0.18);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  position: relative;
+  overflow: hidden;
+  transform: scale(0.95) translateY(10px);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.city-selector-modal.active .city-modal-dialog {
+  transform: scale(1) translateY(0);
+}
+
+/* Modal Corner Accents */
+.city-modal-corner-tl {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--cyan-core);
+  opacity: 0.7;
+}
+
+.city-modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.city-modal-close-btn:hover {
+  border-color: var(--cyan-core);
+  color: var(--cyan-core);
+  background: rgba(0, 240, 255, 0.08);
+}
+
+/* Modal Typography */
+.city-modal-header {
+  text-align: center;
+  margin-top: var(--space-xs);
+  margin-bottom: var(--space-xl);
+}
+
+.city-modal-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  color: var(--cyan-core);
+  text-transform: uppercase;
+  margin-bottom: var(--space-xs);
+}
+
+.city-modal-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: var(--space-xs);
+}
+
+.city-modal-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Search Box Input */
+.city-search-container {
+  position: relative;
+  margin-bottom: var(--space-lg);
+}
+
+.city-search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.city-search-icon {
+  position: absolute;
+  left: 18px;
+  color: var(--cyan-core);
+  pointer-events: none;
+}
+
+.city-search-input {
+  width: 100%;
+  padding: 16px 20px 16px 52px;
+  background: rgba(7, 9, 14, 0.7);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.city-search-input:focus {
+  outline: none;
+  border-color: var(--cyan-core);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.25);
+}
+
+.city-search-input::placeholder {
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+}
+
+/* Autocomplete Suggestion Dropdown */
+.city-autocomplete-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: rgba(14, 18, 26, 0.98);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85);
+  max-height: 260px;
+  overflow-y: auto;
+  z-index: 50;
+  display: none;
+}
+
+.city-autocomplete-list.active {
+  display: block;
+}
+
+.city-autocomplete-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.city-autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.city-autocomplete-item:hover,
+.city-autocomplete-item.selected {
+  background: rgba(0, 240, 255, 0.1);
+}
+
+.city-item-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.city-item-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.city-item-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.city-item-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  background: rgba(0, 240, 255, 0.12);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: var(--radius-xs);
+  color: var(--cyan-core);
+}
+
+/* Popular Cities Pill Group */
+.popular-cities-section {
+  margin-bottom: var(--space-xl);
+}
+
+.popular-cities-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: var(--space-xs);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.popular-cities-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.popular-cities-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.city-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(21, 27, 38, 0.8);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.city-pill-btn:hover {
+  border-color: var(--cyan-core);
+  color: var(--cyan-core);
+  background: rgba(0, 240, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.city-pill-btn.active {
+  border-color: var(--cyan-core);
+  background: rgba(0, 240, 255, 0.16);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.3);
+}
+
+.city-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: background var(--transition-fast);
+}
+
+.city-pill-btn.active .city-pill-dot {
+  background: var(--cyan-core);
+  box-shadow: 0 0 6px var(--cyan-core);
+}
+
+/* Geolocation Action */
+.city-detect-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.btn-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 10px 18px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-location:hover {
+  border-color: var(--violet-core);
+  color: #ffffff;
+  background: rgba(139, 92, 246, 0.12);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.25);
+}
+
+.location-status-text {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.location-status-text.success {
+  color: var(--cyan-core);
+}
+
+.location-status-text.warning {
+  color: var(--amber-core);
+}
+
+
+/* --------------------------------------------------------------------------
+   2. Navbar City Switcher Pill
+   -------------------------------------------------------------------------- */
+.nav-city-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(14, 18, 26, 0.85);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.nav-city-btn:hover {
+  background: rgba(0, 240, 255, 0.12);
+  border-color: var(--cyan-core);
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.city-pin-icon {
+  color: var(--cyan-core);
+  flex-shrink: 0;
+}
+
+.city-change-tag {
+  font-size: 0.65rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1px 6px;
+  border-radius: var(--radius-xs);
+  color: var(--cyan-core);
+  letter-spacing: 0.05em;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. Section: City Intelligence Profile (#city-profile-section)
+   -------------------------------------------------------------------------- */
+.city-profile-section {
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 240, 255, 0.06), transparent 70%),
+              var(--bg-core);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: var(--space-4xl) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.city-profile-header-box {
+  margin-bottom: var(--space-2xl);
+}
+
+.city-profile-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.city-tagline-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--cyan-core);
+}
+
+.city-coords-badge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.city-context-lead {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 820px;
+}
+
+/* 8-Tile Profile Grid */
+.city-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: var(--space-3xl);
+}
+
+@media (max-width: 1024px) {
+  .city-profile-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .city-profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-metric-tile {
+  background: rgba(14, 18, 26, 0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-metric-tile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.profile-metric-tile:hover {
+  border-color: rgba(0, 240, 255, 0.3);
+  transform: translateY(-2px);
+  background: rgba(21, 27, 38, 0.85);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.profile-metric-tile:hover::before {
+  opacity: 1;
+}
+
+.profile-metric-tile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xs);
+}
+
+.profile-metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.profile-metric-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--cyan-core);
+  opacity: 0.8;
+}
+
+.profile-metric-value {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin-top: 4px;
+}
+
+
+/* --------------------------------------------------------------------------
+   4. Analyzed Challenges Container
+   -------------------------------------------------------------------------- */
+.city-challenges-block {
+  background: rgba(14, 18, 26, 0.5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  position: relative;
+}
+
+.challenges-block-header {
+  margin-bottom: var(--space-xl);
+}
+
+.challenges-block-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.challenges-block-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .challenges-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.challenge-card {
+  background: rgba(21, 27, 38, 0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.challenge-card:hover {
+  border-color: rgba(0, 240, 255, 0.35);
+  background: rgba(28, 36, 51, 0.85);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 240, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.challenge-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.challenge-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  color: var(--cyan-core);
+}
+
+.challenge-status-pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--amber-core);
+}
+
+.challenge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--amber-core);
+  box-shadow: 0 0 8px var(--amber-core);
+}
+
+.challenge-title {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+  line-height: 1.35;
+}
+
+.challenge-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: var(--space-md);
+  flex-grow: 1;
+}
+
+.challenge-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.challenge-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--cyan-core);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-xs);
+  transition: all var(--transition-fast);
+}
+
+.challenge-btn:hover {
+  background: rgba(0, 240, 255, 0.1);
+  transform: translateX(3px);
+}
+
+
 /* --- hero.css --- */
 /* ==========================================================================
    NOVA HERO SECTION — 3D CITY DIGITAL TWIN & HUD TELEMETRY
@@ -3263,6 +3936,87 @@ img, svg, canvas {
 <body>
 
   <!-- ========================================================================
+       CITY SELECTION MODAL OVERLAY: "WHERE SHOULD WE BUILD THE FUTURE?"
+       ======================================================================== -->
+  <div id="city-selector-modal" class="city-selector-modal" role="dialog" aria-modal="true" aria-labelledby="city-modal-title">
+    <div class="city-modal-dialog">
+      <span class="city-modal-corner-tl">SYS // CITY_FIRST_INTEL</span>
+      <button id="city-modal-close-btn" class="city-modal-close-btn" aria-label="Close modal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="city-modal-header">
+        <div class="city-modal-eyebrow">
+          <span class="status-pulse"></span>
+          <span>CIVIC LOCATION PROTOCOL</span>
+        </div>
+        <h2 id="city-modal-title" class="city-modal-title">Where should we build the future?</h2>
+        <p class="city-modal-desc">
+          Select your city to tailor NOVA's living digital twins, localized environmental diagnostics, and systemic decision simulations.
+        </p>
+      </div>
+
+      <!-- Search input & Autocomplete -->
+      <div class="city-search-container">
+        <div class="city-search-input-wrapper">
+          <svg class="city-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="city-search-input" class="city-search-input" placeholder="Search your city or state (e.g. Dehradun, Delhi, Mumbai)..." autocomplete="off" spellcheck="false">
+        </div>
+        <div id="city-autocomplete-list" class="city-autocomplete-list"></div>
+      </div>
+
+      <!-- Popular Cities Quick Selection -->
+      <div class="popular-cities-section">
+        <div class="popular-cities-label">Popular Regional Hubs</div>
+        <div class="popular-cities-pills">
+          <button class="city-pill-btn active" data-city="dehradun">
+            <span class="city-pill-dot"></span>
+            <span>Dehradun</span>
+          </button>
+          <button class="city-pill-btn" data-city="delhi">
+            <span class="city-pill-dot"></span>
+            <span>Delhi</span>
+          </button>
+          <button class="city-pill-btn" data-city="mumbai">
+            <span class="city-pill-dot"></span>
+            <span>Mumbai</span>
+          </button>
+          <button class="city-pill-btn" data-city="bengaluru">
+            <span class="city-pill-dot"></span>
+            <span>Bengaluru</span>
+          </button>
+          <button class="city-pill-btn" data-city="hyderabad">
+            <span class="city-pill-dot"></span>
+            <span>Hyderabad</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Geolocation Action -->
+      <div class="city-detect-section">
+        <button id="city-detect-btn" class="btn-location">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="22" y1="12" x2="18" y2="12"></line>
+            <line x1="6" y1="12" x2="2" y2="12"></line>
+            <line x1="12" y1="6" x2="12" y2="2"></line>
+            <line x1="12" y1="22" x2="12" y2="18"></line>
+          </svg>
+          <span>Use My Location</span>
+        </button>
+        <span id="city-location-status" class="location-status-text"></span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
        STICKY NAVIGATION & SYSTEM STATUS BAR
        ======================================================================== -->
   <header class="nova-nav" role="banner">
@@ -3278,7 +4032,8 @@ img, svg, canvas {
       </div>
 
       <nav class="nav-menu" role="navigation" aria-label="Main Navigation">
-        <a href="#city" class="nav-link">CITY</a>
+        <a href="#city-profile-section" class="nav-link">CITY INTEL</a>
+        <a href="#city" class="nav-link">ZONES</a>
         <a href="#intelligence" class="nav-link">INTELLIGENCE</a>
         <a href="#simulate" class="nav-link">SIMULATE</a>
         <a href="#human-ai" class="nav-link">HUMAN + AI</a>
@@ -3288,6 +4043,17 @@ img, svg, canvas {
       </nav>
 
       <div class="nav-actions">
+
+        <!-- Active City Switcher Button -->
+        <button id="nav-city-btn" class="nav-city-btn" aria-label="Change Selected City" title="Click to switch city">
+          <svg class="city-pin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
+            <circle cx="12" cy="9" r="2.5"></circle>
+          </svg>
+          <span id="nav-city-name">DEHRADUN</span>
+          <span class="city-change-tag">CHANGE</span>
+        </button>
+
         <!-- System Status Indicator -->
         <div class="system-badge" title="Live system status">
           <span class="status-pulse"></span>
@@ -3331,8 +4097,8 @@ img, svg, canvas {
 
       <!-- Real-time HUD Telemetry Overlays -->
       <div class="hud-stamp hud-stamp-tl">
-        <span>CORE // v4.8.2</span>
-        <span class="hud-value">LAT 37.7749° N • LON 122.4194° W</span>
+        <span id="hero-hud-city">CITY // DEHRADUN</span>
+        <span class="hud-value" id="hero-hud-coords">LAT 30.3165° N • LON 78.0322° E</span>
       </div>
 
       <div class="hud-stamp hud-stamp-tr">
@@ -3377,7 +4143,14 @@ img, svg, canvas {
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
           </button>
-          <button id="hero-explore-btn" class="btn btn-secondary">
+          <button id="hero-change-city-btn" class="btn btn-secondary">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
+              <circle cx="12" cy="9" r="2.5"></circle>
+            </svg>
+            <span>CHANGE CITY</span>
+          </button>
+          <button id="hero-explore-btn" class="btn btn-outline">
             <span>EXPLORE THE VISION</span>
           </button>
         </div>
@@ -3390,6 +4163,134 @@ img, svg, canvas {
           <path d="M12 8v8m-4-4h8"></path>
         </svg>
         <span>DRAG TO ROTATE 3D CITY • SCROLL TO EXPLORE</span>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         CITY-FIRST INTELLIGENCE: LOCALIZED PROFILE & ANALYZED CHALLENGES
+         ======================================================================== -->
+    <section id="city-profile-section" class="section city-profile-section" aria-label="City Intelligence Profile">
+      <div class="container-wide">
+        <div class="city-profile-header-box">
+          <span class="section-tag">LOCAL INTELLIGENCE // URBAN TWIN PROFILE</span>
+          <h2 class="section-title">
+            Welcome to NOVA — <span id="profile-city-name" class="text-cyan">Dehradun</span>
+          </h2>
+          <div class="city-profile-meta-row">
+            <span id="profile-city-tagline" class="city-tagline-badge">Doon Valley Ecological Basin & Foothill Innovation Corridor</span>
+            <span id="profile-city-coords" class="city-coords-badge">LAT 30.3165° N • LON 78.0322° E</span>
+          </div>
+          <p id="profile-city-context" class="city-context-lead">
+            Balancing rapid Himalayan foothill urban expansion with natural drainage aquifers and protected Sal forest bio-corridors.
+          </p>
+        </div>
+
+        <!-- 8-Tile City Intelligence Profile Grid -->
+        <div class="city-profile-grid">
+          <div class="profile-metric-tile">
+            <div class="profile-metric-tile-header">
+              <span class="profile-metric-label">Environment</span>
+              <svg class="profile-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+              </svg>
+            </div>
+            <div id="prof-metric-env" class="profile-metric-value">Sensitive Himalayan Foothill Basin</div>
+          </div>
+
+          <div class="profile-metric-tile">
+            <div class="profile-metric-tile-header">
+              <span class="profile-metric-label">Air Quality</span>
+              <svg class="profile-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+              </svg>
+            </div>
+            <div id="prof-metric-aqi" class="profile-metric-value">Moderate (AQI 68)</div>
+          </div>
+
+          <div class="profile-metric-tile">
+            <div class="profile-metric-tile-header">
+              <span class="profile-metric-label">Mobility & Transit</span>
+              <svg class="profile-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+                <circle cx="7" cy="18" r="2"></circle>
+                <circle cx="17" cy="18" r="2"></circle>
+                <path d="M5 11l2-6h10l2 6"></path>
+              </svg>
+            </div>
+            <div id="prof-metric-mobility" class="profile-metric-value">Valley Choke-points & Mountain Gateways</div>
+          </div>
+
+          <div class="profile-metric-tile">
+            <div class="profile-metric-tile-header">
+              <span class="profile-metric-label">Urban Growth Pressure</span>
+              <svg class="profile-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                <polyline points="17 6 23 6 23 12"></polyline>
+              </svg>
+            </div>
+            <div id="prof-metric-growth" class="profile-metric-value">Rapid Foothill Sprawl (+4.2%/yr)</div>
+          </div>
+
+          <div class="profile-metric-tile">
+            <div class="profile-metric-tile-header">
+              <span class="profile-metric-label">Energy Systems</span>
+              <svg class="profile-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <div id="prof-metric-energy" class="profile-metric-value">Micro-Hydro + Rooftop Solar (74%)</div>
+          </div>
+
+          <div class="profile-metric-tile">
+            <div class="profile-metric-tile-header">
+              <span class="profile-metric-label">Healthcare Response</span>
+              <svg class="profile-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+              </svg>
+            </div>
+            <div id="prof-metric-health" class="profile-metric-value">Regional Healthcare Gateway (4.1 min)</div>
+          </div>
+
+          <div class="profile-metric-tile">
+            <div class="profile-metric-tile-header">
+              <span class="profile-metric-label">Key Environmental Risk</span>
+              <svg class="profile-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div id="prof-metric-risk" class="profile-metric-value">High (Flash Floods & Monsoon Runoff)</div>
+          </div>
+
+          <div class="profile-metric-tile">
+            <div class="profile-metric-tile-header">
+              <span class="profile-metric-label">Canopy & Eco Cover</span>
+              <svg class="profile-metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22v-7l-2-2"></path>
+                <path d="M17 8a5 5 0 0 0-10 0 4.5 4.5 0 0 0 .5 9h9a4.5 4.5 0 0 0 .5-9Z"></path>
+              </svg>
+            </div>
+            <div id="prof-metric-canopy" class="profile-metric-value">High (54% Forest Canopy)</div>
+          </div>
+        </div>
+
+        <!-- Analyzed Challenges Block -->
+        <div class="city-challenges-block">
+          <div class="challenges-block-header">
+            <h3 class="challenges-block-title">
+              <span class="status-pulse"></span>
+              <span>WE'VE ANALYZED YOUR CITY</span>
+            </h3>
+            <p class="challenges-block-subtitle">
+              Predictive digital twins and sensor networks have identified 4 critical friction domains in <strong id="challenge-city-name">Dehradun</strong> where algorithmic systems and human policy must collaborate.
+            </p>
+          </div>
+
+          <div id="city-challenges-grid" class="challenges-grid">
+            <!-- Dynamic challenge cards rendered via js/city-selector.js -->
+          </div>
+        </div>
       </div>
     </section>
 
@@ -3843,6 +4744,7 @@ img, svg, canvas {
           <!-- Top Header & Live Time -->
           <div class="dash-header-bar">
             <div class="dash-status-group">
+              <div class="dash-ticker"><span class="status-pulse"></span> CITY // <span id="dash-city-name" style="color: var(--cyan-core); font-weight: 700;">DEHRADUN</span></div>
               <div class="dash-ticker">SYSTEM CLOCK: <span id="dash-live-clock">--:--:-- UTC</span></div>
               <div class="dash-ticker">DATA STREAM: <span>SYNCHRONIZED (60 Hz)</span></div>
             </div>
@@ -4370,23 +5272,1135 @@ img, svg, canvas {
 /* --- config.js --- */
 /**
  * NOVA CONFIGURATION & DATA REPOSITORY
- * Global city baselines, zone metadata, simulation scenarios, and timeline data.
+ * Multi-City Intelligence Layer, Sector Zones, Deterministic Simulation Scenarios, and Timeline Data.
+ * Theme: "Design the Digital Future"
  */
 
 window.NOVA_CONFIG = {
-  // Baseline City Telemetry State
+  // Currently Active Selected City
+  activeCityId: 'dehradun',
+
+  // Helper to get active city object
+  getActiveCity: function() {
+    return this.cityData[this.activeCityId] || this.cityData.dehradun;
+  },
+
+  // Helper to switch active city dynamically
+  setActiveCity: function(cityId) {
+    if (this.cityData && this.cityData[cityId]) {
+      this.activeCityId = cityId;
+      this.simulationScenarios = this.cityData[cityId].scenarios;
+      try {
+        localStorage.setItem('nova_selected_city', cityId);
+      } catch (e) {}
+      window.dispatchEvent(new CustomEvent('nova:city-changed', {
+        detail: { cityId: cityId, city: this.cityData[cityId] }
+      }));
+      return true;
+    }
+    return false;
+  },
+
+  // Dynamic baseline returning the active city metrics
+  get baseline() {
+    return this.getActiveCity().metrics;
+  },
+
+
+  // Structured City Intelligence Repository
+  cityData: {
+    dehradun: {
+      id: 'dehradun',
+      name: 'Dehradun',
+      state: 'Uttarakhand',
+      country: 'India',
+      tagline: 'Doon Valley Ecological Basin & Foothill Innovation Corridor',
+      coordinates: 'LAT 30.3165° N • LON 78.0322° E',
+      populationDisplay: '840,000',
+      heroContext: 'Balancing rapid Himalayan foothill urban expansion with natural drainage aquifers and protected Sal forest bio-corridors.',
+      profile: {
+        environment: 'Sensitive Himalayan Foothill Basin',
+        airQuality: 'Moderate (AQI 68)',
+        mobility: 'Valley Choke-points & Mountain Gateways',
+        urbanGrowth: 'Rapid Foothill Sprawl (+4.2%/yr)',
+        energy: 'Micro-Hydro + Rooftop Solar (74%)',
+        healthcare: 'Regional Healthcare Gateway (4.1 min)',
+        environmentalRisk: 'High (Flash Floods & Monsoon Runoff)',
+        greenCover: 'High (54% Forest Canopy)'
+      },
+      metrics: {
+        population: 840000,
+        energyEfficiency: 86.4,
+        airQualityIndex: 68,
+        trafficCongestion: 42,
+        healthcareResponse: 4.1,
+        renewableMix: 74.0,
+        sustainability: 84,
+        safety: 82,
+        efficiency: 78,
+        wellbeing: 88,
+        innovation: 80
+      },
+      challenges: [
+        {
+          tag: 'CRITICAL DRAINAGE',
+          title: 'Monsoon Flash Flood & Catchment Saturation',
+          desc: 'Rapid concretization has reduced natural stormwater percolation into valley gravel beds by 38%, turning the Rispana and Bindal seasonal streams into hazardous flood torrents.'
+        },
+        {
+          tag: 'ECOSYSTEM INTEGRITY',
+          title: 'Foothill Urban Encroachment into Forest Belts',
+          desc: 'Accelerated real estate development encroaches on vital elephant and leopard migratory corridors linking the Doon Valley to Rajaji National Park.'
+        },
+        {
+          tag: 'TRANSIT STRAIN',
+          title: 'Topographical Traffic Choke-points on Tourism Corridors',
+          desc: 'Peak seasonal pilgrim and tourist traffic bound for Mussoorie and Char Dham overloads the narrow valley gateway roads, causing multi-hour standstills.'
+        },
+        {
+          tag: 'WATER SECURITY',
+          title: 'Himalayan Spring Shed Depletion & Aquifer Stress',
+          desc: 'Over-extraction of sub-surface mountain springs combined with erratic monsoons has depleted municipal drinking reserves in elevated residential neighborhoods.'
+        }
+      ],
+      scenarios: [
+        {
+          id: 'flood',
+          number: '01',
+          title: 'Doon Valley Cloudburst & Flash Flood Risk',
+          badge: 'MONSOON CATCHMENT SPIKE // 180MM RUNOFF',
+          situation: 'A sudden Himalayan cloudburst has saturated the Doon Valley catchment. Water levels in the Rispana and Bindal streams are rising at 0.4 meters per hour, threatening 45,000 residents in low-lying settlements.',
+          question: 'What should NOVA prioritize to protect the valley from catastrophic inundation?',
+          options: [
+            {
+              key: 'A',
+              title: 'Activate Subterranean Stormwater Siphons & Weirs',
+              desc: 'Deploy automated weir gates to divert peak flood volume into underground aquifer recharge chambers along the valley fringe.',
+              deltas: { sustainability: 14, safety: 18, efficiency: 8, wellbeing: 15, innovation: 12 },
+              narrative: 'Automated weirs absorbed 62% of surge runoff, preventing riverbank breach and replenishing critical Doon aquifers for the dry season.'
+            },
+            {
+              key: 'B',
+              title: 'Deploy Natural Sponge Wetlands & Eco-Buffers',
+              desc: 'Open designated peripheral flood meadow reservations to naturally pool runoff and filter silt through native riparian vegetation.',
+              deltas: { sustainability: 18, safety: 12, efficiency: 6, wellbeing: 14, innovation: 8 },
+              narrative: 'Ecological wetlands successfully absorbed the deluge with zero structural concrete damage, expanding Dehradun green cover.'
+            },
+            {
+              key: 'C',
+              title: 'Enforce Geo-fenced Catchment Evacuation',
+              desc: 'Evacuate vulnerable riverside settlements via autonomous electric shuttles and convert municipal community centers into shelters.',
+              deltas: { sustainability: 6, safety: 20, efficiency: -4, wellbeing: 12, innovation: 10 },
+              narrative: 'Zero lives lost. 12,000 residents relocated within 45 minutes, though commercial transit was temporarily disrupted.'
+            },
+            {
+              key: 'D',
+              title: 'AI Multi-Agent Hydro-Topographical Balancing',
+              desc: 'Permit NOVA AI to coordinate micro-dam retention, dynamic pump routing, and arterial lane closures across all 18 foothill watersheds.',
+              deltas: { sustainability: 12, safety: 16, efficiency: 16, wellbeing: 10, innovation: 19 },
+              narrative: 'Algorithmic micro-balancing prevented municipal flooding with surgical precision, keeping 92% of road networks operating.'
+            }
+          ]
+        },
+        {
+          id: 'forest',
+          number: '02',
+          title: 'Foothill Forest Corridor Encroachment',
+          badge: 'BIODIVERSITY ALERT // BUFFER ZONE STRESS',
+          situation: 'Unauthorized peripheral real-estate construction is fragmenting the critical wildlife corridor between Thano forest and Rajaji National Park, increasing human-wildlife encounters.',
+          question: 'How should NOVA enforce ecological zoning while accommodating necessary urban housing?',
+          options: [
+            {
+              key: 'A',
+              title: 'Demarcate Satellite Smart Bio-Fencing & Corridors',
+              desc: 'Install bio-acoustic boundary sensors and automated wildlife underpasses, halting heavy machinery near migratory routes.',
+              deltas: { sustainability: 17, safety: 14, efficiency: 9, wellbeing: 12, innovation: 15 },
+              narrative: 'Migratory routes secured. Wildlife movement detected by infrared mesh, reducing human-wildlife conflict by 84%.'
+            },
+            {
+              key: 'B',
+              title: 'Mandate High-Density Vertical Eco-Clusters',
+              desc: 'Moratorium on horizontal forest sprawl; incentivize redevelopment of central brownfields into net-zero vertical timber apartments.',
+              deltas: { sustainability: 19, safety: 10, efficiency: 12, wellbeing: 14, innovation: 16 },
+              narrative: 'Forest sprawl halted. 350 hectares of pristine Sal canopy permanently protected as an unbreachable green belt.'
+            },
+            {
+              key: 'C',
+              title: 'Civic Community Agro-Forestry Stewardship',
+              desc: 'Grant local Himalayan villages digital tenure and economic credits to actively steward and monitor buffer zones.',
+              deltas: { sustainability: 16, safety: 11, efficiency: 7, wellbeing: 18, innovation: 11 },
+              narrative: 'Village cooperatives planted 80,000 indigenous broadleaf saplings, building high community ownership and trust.'
+            },
+            {
+              key: 'D',
+              title: 'Strict Automated Satellite Boundary Enforcement',
+              desc: 'Real-time LiDAR and optical satellite tracking triggers automated stop-work injunctions on unauthorized earthmoving.',
+              deltas: { sustainability: 15, safety: 13, efficiency: 14, wellbeing: 8, innovation: 18 },
+              narrative: 'Zero illegal clearing tolerated. Developer compliance reached 99.1% within 14 days.'
+            }
+          ]
+        },
+        {
+          id: 'transit',
+          number: '03',
+          title: 'Mussoorie Tourism Highway Gridlock',
+          badge: 'CONGESTION SPIKE // RAJPUR GATEWAY',
+          situation: 'A long weekend has brought 28,000 visitor vehicles toward the Mussoorie and Char Dham corridors, choking Dehradun arterials and blocking local ambulance routes.',
+          question: 'Which mobility strategy clears the Doon Valley gateway?',
+          options: [
+            {
+              key: 'A',
+              title: 'Mandatory Peripheral Intermodal Park-and-Ride',
+              desc: 'Intercept private combustion vehicles at suburban checkpoints and transfer visitors to zero-emission ropeways and autonomous electric buses.',
+              deltas: { sustainability: 18, safety: 14, efficiency: 12, wellbeing: 13, innovation: 15 },
+              narrative: 'Valley road emissions dropped 64% in 2 hours. Tourism revenue maintained with zero traffic paralysis.'
+            },
+            {
+              key: 'B',
+              title: 'Dynamic Digital Twin Congestion Toll Gates',
+              desc: 'Implement dynamic geo-fenced entry pricing that surges during peak congestion, redirecting discretionary drivers to eco-parks.',
+              deltas: { sustainability: 12, safety: 10, efficiency: 16, wellbeing: 9, innovation: 17 },
+              narrative: 'Peak vehicle volume dropped 44%. Collected toll funds redirected into local mountain reforestation.'
+            },
+            {
+              key: 'C',
+              title: 'Emergency Medical Clear-Corridor Lock',
+              desc: 'Geofence the right lane of Rajpur and Saharanpur roads exclusively for emergency ambulances and public transit pods.',
+              deltas: { sustainability: 8, safety: 20, efficiency: 10, wellbeing: 15, innovation: 13 },
+              narrative: 'Emergency response time held steady at 3.8 minutes despite crushing holiday tourism volumes.'
+            },
+            {
+              key: 'D',
+              title: 'Staggered Autonomous Signal Wave Synchronization',
+              desc: 'Synchronize 84 traffic nodes across Dehradun to prioritize outward dispersal of tourist queues toward bypass expressways.',
+              deltas: { sustainability: 10, safety: 12, efficiency: 17, wellbeing: 11, innovation: 14 },
+              narrative: 'Average bottleneck delay slashed from 95 minutes down to 22 minutes via algorithmic signal timing.'
+            }
+          ]
+        },
+        {
+          id: 'water',
+          number: '04',
+          title: 'Himalayan Spring Shed & Aquifer Depletion',
+          badge: 'WATER RESERVES // -34% SPRING DISCHARGE',
+          situation: 'Consecutive dry months have reduced spring discharge from upper mountain recharge zones by 34%. Upland residential sectors face severe pressure on piped water supply.',
+          question: 'How does NOVA restore water balance and community resilience?',
+          options: [
+            {
+              key: 'A',
+              title: 'Deploy Decentralized Spring Shed Infiltration Trenches',
+              desc: 'Construct contour trenches and check dams across 12 recharge ridges to capture future dew and rainfall directly into aquifers.',
+              deltas: { sustainability: 20, safety: 12, efficiency: 10, wellbeing: 16, innovation: 12 },
+              narrative: 'Groundwater table stabilized. Natural spring discharge rebounded 28% within one monsoon season.'
+            },
+            {
+              key: 'B',
+              title: 'Closed-Loop Greywater Recycling Mandate',
+              desc: 'Require commercial complexes and schools to recycle 90% of non-potable water for gardening, HVAC, and sanitation.',
+              deltas: { sustainability: 16, safety: 14, efficiency: 14, wellbeing: 12, innovation: 14 },
+              narrative: 'Municipal fresh water demand dropped by 4.2 million liters daily, safeguarding residential reserves.'
+            },
+            {
+              key: 'C',
+              title: 'Smart Ultrasonic Leak Detection & Pressure Balancing',
+              desc: 'Deploy acoustic acoustic IoT sensors across the aging pipeline network to eliminate 32% of hidden distribution loss.',
+              deltas: { sustainability: 14, safety: 11, efficiency: 19, wellbeing: 13, innovation: 17 },
+              narrative: 'Repaired 140 subterranean leaks within 72 hours, recovering 18% additional potable water supply.'
+            },
+            {
+              key: 'D',
+              title: 'Equitable Smart Metering with Basic Life Allowance',
+              desc: 'Guarantee 120 liters/day free per citizen while heavily tier-pricing luxury villa swimming pools and lawn irrigation.',
+              deltas: { sustainability: 15, safety: 16, efficiency: 11, wellbeing: 19, innovation: 11 },
+              narrative: 'Strong civic approval. Wealthy commercial users curtailed waste while vulnerable families secured dignified access.'
+            }
+          ]
+        }
+      ]
+    },
+
+    delhi: {
+      id: 'delhi',
+      name: 'Delhi NCR',
+      state: 'National Capital Region',
+      country: 'India',
+      tagline: 'Mega-Metropolis Air Basin & Multi-Modal Transit Grid',
+      coordinates: 'LAT 28.6139° N • LON 77.2090° E',
+      populationDisplay: '21,400,000',
+      heroContext: 'Tackling hazardous winter smog inversions, peak summer heatwaves, and arterial ring road transit density across a 21-million citizen megacity.',
+      profile: {
+        environment: 'Semi-Arid Yamuna River Plain',
+        airQuality: 'Severe Winter Inversion (AQI 184)',
+        mobility: 'Heavy Radial & Ring Road Congestion',
+        urbanGrowth: 'Ultra-Dense Megacity (+2.8%/yr)',
+        energy: 'Solar + Clean Grid Import (62%)',
+        healthcare: 'High-Capacity Tertiary Trauma (3.2 min)',
+        environmentalRisk: 'Severe (Winter Smog & Summer Heatwaves)',
+        greenCover: 'Moderate (23% Ridge Forest)'
+      },
+      metrics: {
+        population: 21400000,
+        energyEfficiency: 82.1,
+        airQualityIndex: 184,
+        trafficCongestion: 68,
+        healthcareResponse: 3.2,
+        renewableMix: 62.0,
+        sustainability: 68,
+        safety: 76,
+        efficiency: 84,
+        wellbeing: 72,
+        innovation: 92
+      },
+      challenges: [
+        {
+          tag: 'HAZARDOUS AIR',
+          title: 'Severe Particulate Smog & Thermal Inversion',
+          desc: 'Winter meteorological inversions trap vehicular PM2.5, dust, and regional biomass smoke, driving the Air Quality Index past severe hazardous thresholds.'
+        },
+        {
+          tag: 'MOBILITY DENSITY',
+          title: 'Arterial Ring-Road Traffic Paralyzation',
+          desc: 'Over 11 million registered vehicles generate intense radial congestion, stressing outer ring roads and arterial junctions during peak hours.'
+        },
+        {
+          tag: 'THERMAL CRISIS',
+          title: 'Extreme Summer Heatwave & Substation Overload',
+          desc: 'Sustained summer temperatures exceeding 47°C cause dramatic air conditioning demand spikes, threatening electrical grid substations with cascading brownouts.'
+        },
+        {
+          tag: 'RIVER ECOSYSTEM',
+          title: 'Yamuna River Watershed Restoration',
+          desc: 'Urban discharge and untreated industrial effluent stress the river corridor, requiring closed-loop bioremediation and floodplain protection.'
+        }
+      ],
+      scenarios: [
+        {
+          id: 'smog',
+          number: '01',
+          title: 'Hazardous Winter Smog & AQI Crisis',
+          badge: 'AIR QUALITY EMERGENCY // AQI 420+',
+          situation: 'A sudden thermal inversion has trapped fine particulate matter across Delhi NCR. The Air Quality Index has breached 420 across 28 municipal monitoring stations, triggering severe pediatric and geriatric respiratory alerts.',
+          question: 'What executive action does NOVA implement to rapidly scrub the air basin?',
+          options: [
+            {
+              key: 'A',
+              title: 'Deploy Automated Ultrasonic Mist Towers & Smog Canopies',
+              desc: 'Activate 1,200 vertical misting masts along arterial roads and rooftop scrubbers to precipitate PM2.5 and PM10 particles.',
+              deltas: { sustainability: 18, safety: 16, efficiency: 10, wellbeing: 17, innovation: 16 },
+              narrative: 'Particulate density dropped by 34% in critical pedestrian zones within 6 hours. Pediatric clinic admissions stabilized.'
+            },
+            {
+              key: 'B',
+              title: 'Enforce Zero-Emission Electric Only Transit Zone',
+              desc: 'Moratorium on private fossil-fuel vehicle entry within the Inner Ring Road; make all metro and electric bus lines completely fare-free.',
+              deltas: { sustainability: 20, safety: 14, efficiency: 12, wellbeing: 15, innovation: 14 },
+              narrative: 'Vehicular emissions slashed by 58%. Public transit ridership broke record highs with smooth multi-modal flow.'
+            },
+            {
+              key: 'C',
+              title: 'Temporary Non-Essential Industrial & Construction Stop',
+              desc: 'Halt brick kilns, thermal processing, and demolition dust activities across NCR with real-time drone verification.',
+              deltas: { sustainability: 17, safety: 12, efficiency: -8, wellbeing: 12, innovation: 10 },
+              narrative: 'Dust generation halted instantly, providing immediate breathing room for the city at the cost of short-term industrial delay.'
+            },
+            {
+              key: 'D',
+              title: 'Hyperlocal Air Purified Civic Bio-Sanctuaries',
+              desc: 'Convert metro stations, community hubs, and government schools into 24/7 HEPA-filtered clean air relief lounges.',
+              deltas: { sustainability: 10, safety: 19, efficiency: 8, wellbeing: 18, innovation: 12 },
+              narrative: 'Over 650,000 vulnerable citizens accessed verified clean air, drastically cutting acute hospital admissions.'
+            }
+          ]
+        },
+        {
+          id: 'heatwave',
+          number: '02',
+          title: 'Peak Summer Heatwave & Substation Overload',
+          badge: 'HEAT SURGE // 47.8°C PEAK LOAD',
+          situation: 'Temperatures have soared to 47.8°C across the National Capital Region. Air conditioning electrical demand has surged to 8,200 MW, threatening major transmission substations with catastrophic tripping.',
+          question: 'How does NOVA balance electrical integrity while protecting citizen lives?',
+          options: [
+            {
+              key: 'A',
+              title: 'Dynamic HVAC Modulation across Commercial Hubs',
+              desc: 'Algorithmically throttle commercial office temperatures from 20°C to 24.5°C across 4,000 corporate buildings in Connaught Place and Cyber City.',
+              deltas: { sustainability: 15, safety: 14, efficiency: 18, wellbeing: 10, innovation: 17 },
+              narrative: 'Shaved 680 MW of peak demand in 4 minutes with zero blackouts. Commercial occupants reported comfortable conditions.'
+            },
+            {
+              key: 'B',
+              title: 'Discharge District Solid-State Energy Buffers',
+              desc: 'Draw down municipal grid battery reserves to sustain residential and healthcare electricity without any curtailment.',
+              deltas: { sustainability: 12, safety: 18, efficiency: 9, wellbeing: 16, innovation: 12 },
+              narrative: 'Zero power cuts across residential neighborhoods. Battery storage carried the city through the 4-hour peak window.'
+            },
+            {
+              key: 'C',
+              title: 'Deploy Mobile Water Mist Trucks to Urban Heat Islands',
+              desc: 'Dispatch zero-emission cooling tankers to dense unshaded settlements to reduce ambient road temperatures by 4°C.',
+              deltas: { sustainability: 14, safety: 17, efficiency: 7, wellbeing: 19, innovation: 11 },
+              narrative: 'Heat-related fatalities prevented in dense colonies. Citizens lauded the humane prioritization of vulnerable areas.'
+            },
+            {
+              key: 'D',
+              title: 'Incentivize Voluntary Rooftop Solar Peer-Feeding',
+              desc: 'Pay residential solar owners 2.5x green credits to export excess battery power into the stressed grid.',
+              deltas: { sustainability: 19, safety: 11, efficiency: 16, wellbeing: 14, innovation: 19 },
+              narrative: 'Citizens fed 210 MWh back into the grid, turning a potential blackout into a celebration of decentralized clean power.'
+            }
+          ]
+        },
+        {
+          id: 'traffic',
+          number: '03',
+          title: 'Arterial Ring-Road Transit Gridlock',
+          badge: 'RADIAL GRIDLOCK // 120KM BOTTLENECK',
+          situation: 'Multiple vehicle breakdowns on the Ring Road and DND Flyway have cascaded into a 22-kilometer standstill, delaying 180,000 commuters and impeding emergency hospital vehicles.',
+          question: 'Which transit intervention restores circulation across the capital?',
+          options: [
+            {
+              key: 'A',
+              title: 'Automated Lane Reversal & Dynamic Signal Clearance',
+              desc: 'Reconfigure multi-lane expressways with automated dynamic overhead lane direction signs, bleeding traffic toward parallel relief arteries.',
+              deltas: { sustainability: 11, safety: 13, efficiency: 19, wellbeing: 12, innovation: 17 },
+              narrative: 'Traffic speed doubled within 25 minutes. Gridlock resolved without requiring physical police intervention.'
+            },
+            {
+              key: 'B',
+              title: 'Emergency Medical Green-Wave Corridors',
+              desc: 'Prioritize AI-cleared traffic signals 1.5 km ahead of all ambulances and emergency medical drone escorts.',
+              deltas: { sustainability: 6, safety: 20, efficiency: 11, wellbeing: 15, innovation: 14 },
+              narrative: 'Ambulances reached AIIMS and Safdarjung Hospital in 2.9 minutes. Zero critical patient delays.'
+            },
+            {
+              key: 'C',
+              title: 'Surge Metro Rail Cadence to 90 Seconds',
+              desc: 'Deploy automated reserve driverless trains across Yellow and Blue lines to absorb surface vehicular demand.',
+              deltas: { sustainability: 18, safety: 15, efficiency: 14, wellbeing: 16, innovation: 15 },
+              narrative: '94,000 drivers parked and took the metro, slashing arterial congestion and cutting tons of carbon emissions.'
+            },
+            {
+              key: 'D',
+              title: 'Staggered Commercial Departure Windows',
+              desc: 'Issue automated departure coordination slots to large corporate tech parks, dispersing evening rush hour over 3 hours.',
+              deltas: { sustainability: 12, safety: 12, efficiency: 16, wellbeing: 11, innovation: 13 },
+              narrative: 'Peak crush hours smoothed successfully, eliminating recurring gridlock at major toll plazas.'
+            }
+          ]
+        },
+        {
+          id: 'yamuna',
+          number: '04',
+          title: 'Yamuna River Catchment & Floodplain Stress',
+          badge: 'ECOLOGICAL RESTORATION // RIVER ECOSYSTEM',
+          situation: 'Heavy upstream dam discharge combined with urban stormwater runoff threatens low-lying floodplain agricultural settlements along the Yamuna bank.',
+          question: 'How should NOVA manage the river basin and safeguard downstream communities?',
+          options: [
+            {
+              key: 'A',
+              title: 'Activate Wetland Floodplain Absorption Parks',
+              desc: 'Open ecological biodiversity parks along the riverbanks to absorb 140 million cubic meters of floodwaters without concrete walls.',
+              deltas: { sustainability: 20, safety: 16, efficiency: 9, wellbeing: 17, innovation: 14 },
+              narrative: 'Floodwaters recharged groundwater and created thriving bird sanctuaries instead of urban destruction.'
+            },
+            {
+              key: 'B',
+              title: 'Deploy Autonomous Sensor Masts & Rapid Evacuation',
+              desc: 'Alert riverside inhabitants via multi-lingual voice beacons and deploy autonomous transit boats for orderly relocation.',
+              deltas: { sustainability: 11, safety: 19, efficiency: 11, wellbeing: 14, innovation: 16 },
+              narrative: '42,000 citizens relocated safely with dry belongings and zero flood-related casualties.'
+            },
+            {
+              key: 'C',
+              title: 'Automated Sluice Gate Flow Balancing',
+              desc: 'Coordinate barrage discharge gates using predictive rainfall simulations to maintain steady laminar river flow.',
+              deltas: { sustainability: 15, safety: 17, efficiency: 18, wellbeing: 12, innovation: 18 },
+              narrative: 'Water level held 0.8 meters below danger mark through synchronized upstream barrage modulation.'
+            },
+            {
+              key: 'D',
+              title: 'Closed-Loop Bioremediation Filtration Injection',
+              desc: 'Deploy bio-enzymatic aeration micro-rafts to break down trapped industrial surfactants while the river is swollen.',
+              deltas: { sustainability: 21, safety: 12, efficiency: 10, wellbeing: 15, innovation: 15 },
+              narrative: 'River dissolved oxygen levels surged by 40%, marking historic environmental cleanup milestone.'
+            }
+          ]
+        }
+      ]
+    },
+
+    mumbai: {
+      id: 'mumbai',
+      name: 'Mumbai',
+      state: 'Maharashtra',
+      country: 'India',
+      tagline: 'Coastal Megacity & Arabian Sea Blue Infrastructure',
+      coordinates: 'LAT 19.0760° N • LON 72.8777° E',
+      populationDisplay: '13,800,000',
+      heroContext: 'Managing high-tide monsoonal flood locks, suburban rail transit density, and coastal mangrove bio-shields across an island megacity.',
+      profile: {
+        environment: 'Peninsular Coastal & Mangrove Estuary',
+        airQuality: 'Maritime Dispersed (AQI 82)',
+        mobility: 'High Suburban Rail & Arterial Pressure',
+        urbanGrowth: 'Intense Density & Coastal Redevelopment',
+        energy: 'Offshore Wind, Solar & Regional Grid (70%)',
+        healthcare: 'High-Density Municipal Trauma (3.8 min)',
+        environmentalRisk: 'Critical (Monsoon Floods & High Tide Surges)',
+        greenCover: 'Sanjay Gandhi National Park & Mangrove Fringe'
+      },
+      metrics: {
+        population: 13800000,
+        energyEfficiency: 84.5,
+        airQualityIndex: 82,
+        trafficCongestion: 64,
+        healthcareResponse: 3.8,
+        renewableMix: 70.0,
+        sustainability: 74,
+        safety: 78,
+        efficiency: 86,
+        wellbeing: 78,
+        innovation: 89
+      },
+      challenges: [
+        {
+          tag: 'COASTAL INUNDATION',
+          title: 'Monsoonal Storm Surge & High-Tide Flood Lock',
+          desc: 'Simultaneous heavy rainfall and Arabian Sea high tides prevent gravity stormwater discharge, flooding low-lying railway tracks and arterial junctions.'
+        },
+        {
+          tag: 'TRANSIT DENSITY',
+          title: 'Suburban Rail Transit Pressure',
+          desc: 'Over 7.5 million daily commuters rely on the suburban rail spine, where minor weather disruptions trigger severe network-wide delays.'
+        },
+        {
+          tag: 'MANGROVE BUFFERS',
+          title: 'Estuarine Mangrove & Coastal Buffer Protection',
+          desc: 'Urban coastal reclamation encroaches on critical mangrove forests that act as natural wave breakers and carbon sinks.'
+        },
+        {
+          tag: 'EPIDEMIOLOGICAL SURGE',
+          title: 'Monsoonal Waterborne Syndromic Outbreaks',
+          desc: 'High humidity and localized waterlogging risk seasonal dengue and leptospirosis spikes, demanding predictive health surveillance.'
+        }
+      ],
+      scenarios: [
+        {
+          id: 'tide',
+          number: '01',
+          title: 'High-Tide Lock & Monsoonal Storm Surge',
+          badge: 'FLOOD LOCK // 4.8M ARABIAN SEA TIDE',
+          situation: 'A 4.8-meter Arabian Sea high tide coincides with 120mm of rainfall within 2 hours. Stormwater gates are shut to prevent seawater backflow, causing floodwaters to pool in Hindmata, Kurla, and Milan subway.',
+          question: 'How should NOVA mitigate sea lock and keep Mumbai moving?',
+          options: [
+            {
+              key: 'A',
+              title: 'Activate Heavy Underground Submersible Pumping Caverns',
+              desc: 'Engage high-capacity subterranean pump stations to draw 800,000 liters/sec into deep underground balancing holding tanks.',
+              deltas: { sustainability: 15, safety: 19, efficiency: 11, wellbeing: 16, innovation: 14 },
+              narrative: 'Floodwaters pumped below ground in real time. Railway tracks stayed dry and suburban trains continued running.'
+            },
+            {
+              key: 'B',
+              title: 'Deploy Mangrove Wetland Holding Sinks',
+              desc: 'Divert stormwater toward protected mangrove wetland estuaries configured with automated one-way tidal flaps.',
+              deltas: { sustainability: 20, safety: 14, efficiency: 9, wellbeing: 15, innovation: 12 },
+              narrative: 'Mangroves naturally absorbed the peak surge volume, demonstrating the irreplaceable value of living coastal infrastructure.'
+            },
+            {
+              key: 'C',
+              title: 'Pre-emptive Elevated Flyway Rerouting',
+              desc: 'Reroute all essential traffic to the Coastal Road and elevated corridors while closing submerged ground underpasses.',
+              deltas: { sustainability: 8, safety: 17, efficiency: 14, wellbeing: 12, innovation: 15 },
+              narrative: 'Zero stranded vehicles. Commuters safely navigated the city via elevated avenues.'
+            },
+            {
+              key: 'D',
+              title: 'Autonomous Multi-Sensor Urban Drainage Balancing',
+              desc: 'Permit NOVA AI to dynamically throttle 48 coastal sluice gates and 120 floodgates calibrated to wave height sensors.',
+              deltas: { sustainability: 12, safety: 18, efficiency: 17, wellbeing: 14, innovation: 19 },
+              narrative: 'Micro-second gate adjustments synchronized with wave crests prevented backflow while draining low-lying areas.'
+            }
+          ]
+        },
+        {
+          id: 'transit',
+          number: '02',
+          title: 'Suburban Rail Transit Interruption',
+          badge: 'RAIL NETWORK OVERLOAD // CENTRAL LINE',
+          situation: 'Waterlogging on tracks near Kurla has halted Central Line trains during evening rush hour, leaving 350,000 commuters stranded at major terminals.',
+          question: 'Which multimodal intervention evacuates commuters safely?',
+          options: [
+            {
+              key: 'A',
+              title: 'Deploy Autonomous Electric Bus Flotilla',
+              desc: 'Mobilize 1,400 reserve autonomous electric double-decker buses along parallel arterial flyways with bus-only express lanes.',
+              deltas: { sustainability: 16, safety: 17, efficiency: 14, wellbeing: 17, innovation: 14 },
+              narrative: 'Stranded stations evacuated in 40 minutes. Commuters reached home safely without crowd crushing.'
+            },
+            {
+              key: 'B',
+              title: 'Activate Coastal Water Taxi & Ferry Surge',
+              desc: 'Deploy high-speed electric passenger ferries between Gateway of India, Belapur, and Versova to bypass terrestrial congestion.',
+              deltas: { sustainability: 17, safety: 15, efficiency: 12, wellbeing: 18, innovation: 16 },
+              narrative: 'Water transit transported 62,000 commuters smoothly along the coast, relieving inland pressure.'
+            },
+            {
+              key: 'C',
+              title: 'Corporate Remote Working & Local Shelter Order',
+              desc: 'Authorize nearby corporate offices to open lobbies as warm resting zones with refreshments until trains resume.',
+              deltas: { sustainability: 10, safety: 18, efficiency: 8, wellbeing: 19, innovation: 10 },
+              narrative: 'High civic solidarity. Thousands sheltered in comfort, preventing stampedes at waterlogged stations.'
+            },
+            {
+              key: 'D',
+              title: 'Subterranean Metro Line Frequency Surge',
+              desc: 'Run underground Metro Line 3 at 75-second automated headways to absorb cross-city commuter volume.',
+              deltas: { sustainability: 15, safety: 16, efficiency: 19, wellbeing: 15, innovation: 17 },
+              narrative: 'Underground metro absorbed 180,000 commuters with zero weather interference, proving underground resilience.'
+            }
+          ]
+        },
+        {
+          id: 'energy',
+          number: '03',
+          title: 'Marine Cloud Shield & Clean Power Deficit',
+          badge: 'RENEWABLE DEFICIT // 40% SOLAR DROP',
+          situation: 'Dense monsoon stratus clouds have blanketed the coastline for 5 days, slashing solar yield by 40% while humidity drives continuous residential dehumidification and cooling.',
+          question: 'How does NOVA maintain uninterrupted coastal power?',
+          options: [
+            {
+              key: 'A',
+              title: 'Surge Offshore Tidal & Wind Micro-Turbines',
+              desc: 'Unlock offshore marine turbines that generate maximum clean power during intense monsoon winds and tidal currents.',
+              deltas: { sustainability: 19, safety: 15, efficiency: 14, wellbeing: 14, innovation: 17 },
+              narrative: 'High wind and tidal generation compensated for 88% of lost solar output, maintaining 100% grid integrity.'
+            },
+            {
+              key: 'B',
+              title: 'Activate Port & Maritime Battery Storage',
+              desc: 'Discharge solid-state storage banks located at JNPT port and naval docks to power hospitals and transit.',
+              deltas: { sustainability: 12, safety: 18, efficiency: 11, wellbeing: 15, innovation: 12 },
+              narrative: 'Critical infrastructure ran uninterrupted for 36 hours from maritime battery reserves.'
+            },
+            {
+              key: 'C',
+              title: 'Commercial Air Conditioning Thermal Pre-Cooling',
+              desc: 'Pre-cool commercial concrete structures overnight using wind power, idling AC units during daytime peak deficit hours.',
+              deltas: { sustainability: 16, safety: 13, efficiency: 18, wellbeing: 12, innovation: 18 },
+              narrative: 'Buildings maintained comfortable ambient temperatures with zero power draw during peak hours.'
+            },
+            {
+              key: 'D',
+              title: 'Non-Essential Aesthetic Grid Shedding',
+              desc: 'Dim decorative architectural lighting along Marine Drive and idle commercial billboards across South Mumbai.',
+              deltas: { sustainability: 14, safety: 14, efficiency: 15, wellbeing: 11, innovation: 10 },
+              narrative: 'Saved 45 MW instantly without affecting citizen safety or residential power continuity.'
+            }
+          ]
+        },
+        {
+          id: 'health',
+          number: '04',
+          title: 'Monsoonal Syndromic Health Surge',
+          badge: 'PREDICTIVE HEALTH // VECTOR OUTBREAK',
+          situation: 'Predictive bio-sensors have flagged a 300% spike in waterborne and mosquito-borne viral markers in localized coastal slum settlements following unseasonal puddling.',
+          question: 'How does NOVA deploy responsible healthcare interventions?',
+          options: [
+            {
+              key: 'A',
+              title: 'Deploy Drone Larvicidal Bio-Sprayers to Water Pockets',
+              desc: 'Target stagnant water pools with organic bio-control agents using autonomous micro-drones guided by satellite terrain models.',
+              deltas: { sustainability: 18, safety: 19, efficiency: 15, wellbeing: 17, innovation: 18 },
+              narrative: 'Mosquito breeding sites neutralized in 48 hours. Vector density plummeted 82% with zero chemical toxins.'
+            },
+            {
+              key: 'B',
+              title: 'Mobile Modular Diagnostic Lounges in Community Hubs',
+              desc: 'Establish walk-in rapid fever screening clinics staffed by human nurse practitioners at neighborhood transit points.',
+              deltas: { sustainability: 11, safety: 18, efficiency: 10, wellbeing: 20, innovation: 12 },
+              narrative: 'Early detection in 92% of cases. Hospitals avoided overcrowding and patients received dignified community care.'
+            },
+            {
+              key: 'C',
+              title: 'Hyperlocal Clean Drinking Water Kiosk Distribution',
+              desc: 'Deploy UV-purification water filtration pods to all affected neighborhoods, ensuring 100% pure potable water access.',
+              deltas: { sustainability: 15, safety: 17, efficiency: 12, wellbeing: 19, innovation: 13 },
+              narrative: 'Waterborne gastrointestinal cases dropped to zero in 3 days. Public trust in civic water reached peak highs.'
+            },
+            {
+              key: 'D',
+              title: 'Dynamic Cross-Hospital ICU Bed Balancing',
+              desc: 'Distribute critical admissions across municipal and private hospitals in Mumbai using AI-optimized patient transfer pods.',
+              deltas: { sustainability: 9, safety: 18, efficiency: 17, wellbeing: 14, innovation: 16 },
+              narrative: 'Hospital bed occupancy maintained at an optimal 80%, avoiding clinical burnout in public wards.'
+            }
+          ]
+        }
+      ]
+    },
+
+    bengaluru: {
+      id: 'bengaluru',
+      name: 'Bengaluru',
+      state: 'Karnataka',
+      country: 'India',
+      tagline: 'Deccan Plateau Tech Capital & Interconnected Lake Networks',
+      coordinates: 'LAT 12.9716° N • LON 77.5946° E',
+      populationDisplay: '9,600,000',
+      heroContext: 'Solving Outer Ring Road tech corridor mobility gridlock, revitalizing historic lake cascade aquifers, and optimizing peri-urban expansion.',
+      profile: {
+        environment: 'Deccan Plateau Ridge & Interconnected Lakes',
+        airQuality: 'Good to Moderate (AQI 54)',
+        mobility: 'Acute Tech Corridor Gridlock (ORR)',
+        urbanGrowth: 'Fast Peripheral Tech Sprawl (+4.6%/yr)',
+        energy: 'Solar Rooftop & Wind Microgrids (82%)',
+        healthcare: 'Advanced Health-Tech Telemetry (3.5 min)',
+        environmentalRisk: 'Moderate (Groundwater Stress & Lake Encroachment)',
+        greenCover: 'Garden City Canopy (32%)'
+      },
+      metrics: {
+        population: 9600000,
+        energyEfficiency: 89.2,
+        airQualityIndex: 54,
+        trafficCongestion: 72,
+        healthcareResponse: 3.5,
+        renewableMix: 82.0,
+        sustainability: 80,
+        safety: 85,
+        efficiency: 82,
+        wellbeing: 84,
+        innovation: 95
+      },
+      challenges: [
+        {
+          tag: 'TECH COMMUTE',
+          title: 'Outer Ring Road (ORR) Transit Paralyzation',
+          desc: 'High concentration of IT enterprise campuses along the Outer Ring Road generates severe daily commuter gridlock, reducing productivity and inflating commute times.'
+        },
+        {
+          tag: 'WATER CASCADES',
+          title: 'Interconnected Lake Network & Aquifer Depletion',
+          desc: 'Historical interconnected lake channels built in the 16th century have been fragmented by urban sprawl, causing simultaneous flash floods and severe groundwater depletion.'
+        },
+        {
+          tag: 'PERI-URBAN GROWTH',
+          title: 'Peripheral Tech Sprawl & Civic Infrastructure Lag',
+          desc: 'Rapid development beyond municipal boundaries strains sewage treatment, civic power, and drinking water pipelines.'
+        },
+        {
+          tag: 'CANOPY PRESERVATION',
+          title: 'Urban Heat Island vs Garden City Tree Canopy',
+          desc: 'Felling of old-growth roadside trees for road widening creates microclimatic heat islands across industrial tech corridors.'
+        }
+      ],
+      scenarios: [
+        {
+          id: 'traffic',
+          number: '01',
+          title: 'Outer Ring Road Tech Corridor Gridlock',
+          badge: 'CONGESTION EMERGENCY // ORR STANDSTILL',
+          situation: 'Rainfall and a stalled heavy freight vehicle on Marathahalli junction have triggered a 14-kilometer gridlock spanning Whitefield to Bellandur. Over 120,000 IT professionals are immobilized.',
+          question: 'How does NOVA resolve the Outer Ring Road paralysis?',
+          options: [
+            {
+              key: 'A',
+              title: 'Automated Multi-Modal Shuttle Surge & Bus Lanes',
+              desc: 'Enforce dynamic bus-only lanes on ORR and deploy 800 autonomous electric high-occupancy employee pods.',
+              deltas: { sustainability: 17, safety: 14, efficiency: 16, wellbeing: 16, innovation: 17 },
+              narrative: 'Arterial commute time slashed from 90 mins to 24 mins. Tech companies reported seamless employee transit.'
+            },
+            {
+              key: 'B',
+              title: 'Micro-Mobility Skyways & Active Transit Corridors',
+              desc: 'Open elevated dedicated e-bike and cycle skyways connecting metro stations directly into IT campus atriums.',
+              deltas: { sustainability: 20, safety: 15, efficiency: 13, wellbeing: 18, innovation: 16 },
+              narrative: '42,000 commuters switched to active zero-emission e-bikes, permanently cutting surface car density.'
+            },
+            {
+              key: 'C',
+              title: 'Dynamic Work-From-Anywhere Civic Satellite Hubs',
+              desc: 'Direct commuters to decentralized municipal co-working pods within their local residential neighborhoods.',
+              deltas: { sustainability: 16, safety: 12, efficiency: 15, wellbeing: 17, innovation: 14 },
+              narrative: 'Eliminated 65,000 unnecessary trips across the city while preserving tech company operational continuity.'
+            },
+            {
+              key: 'D',
+              title: 'AI Drone Heavy Clearance & Signal Priority',
+              desc: 'Dispatch autonomous heavy tow drones to winch stranded freight vehicles off carriageways within 6 minutes.',
+              deltas: { sustainability: 8, safety: 18, efficiency: 18, wellbeing: 11, innovation: 19 },
+              narrative: 'Obstruction cleared in 340 seconds. Algorithmic green wave flushed remaining queues in 18 minutes.'
+            }
+          ]
+        },
+        {
+          id: 'lakes',
+          number: '02',
+          title: 'Lake Cascade Disconnection & Waterlogging',
+          badge: 'WATERSHED STRESS // BELLANDUR-VARTHUR CATCHMENT',
+          situation: 'An unseasonal cloudburst has overwhelmed Bellandur and Varthur lakes. Because historic feeder storm canals (Rajakaluves) have been encroached, water is backing up into tech parks while groundwater aquifers remain parched.',
+          question: 'Which hydrological strategy restores Bengaluru\'s historic lake chain?',
+          options: [
+            {
+              key: 'A',
+              title: 'Re-open Ecological Rajakaluve Canal Corridors',
+              desc: 'Demolish unauthorized boundary walls encroaching on historical water channels and re-establish natural gravity flow.',
+              deltas: { sustainability: 21, safety: 16, efficiency: 12, wellbeing: 15, innovation: 14 },
+              narrative: 'Natural water cascades reconnected between 7 lakes. Floodwaters drained naturally and recharge rates surged.'
+            },
+            {
+              key: 'B',
+              title: 'Deploy Floating Wetland Bio-Islands & Aerators',
+              desc: 'Install solar-powered micro-bubble aerators and vetiver floating wetlands to digest foam and detoxify water.',
+              deltas: { sustainability: 19, safety: 15, efficiency: 11, wellbeing: 17, innovation: 16 },
+              narrative: 'Toxic lake foam eliminated completely. Migratory waterfowl and freshwater biodiversity returned in weeks.'
+            },
+            {
+              key: 'C',
+              title: 'Underground Aquifer Recharge Wells Network',
+              desc: 'Mandate and construct 10,000 injection wells across commercial campuses to divert floodwater directly into deep granite fissures.',
+              deltas: { sustainability: 18, safety: 17, efficiency: 13, wellbeing: 14, innovation: 15 },
+              narrative: 'Pre-monsoon groundwater depth rose by 4.2 meters, securing water independence for 400,000 residents.'
+            },
+            {
+              key: 'D',
+              title: 'Automated Sluice Gate Predictive Lake Balancing',
+              desc: 'Deploy IoT telemetry gates to automatically pre-drain downstream lakes hours ahead of incoming cloudburst storms.',
+              deltas: { sustainability: 14, safety: 18, efficiency: 17, wellbeing: 13, innovation: 19 },
+              narrative: 'Zero tech parks flooded. Real-time predictive volume buffering handled 140% of peak precipitation.'
+            }
+          ]
+        },
+        {
+          id: 'energy',
+          number: '03',
+          title: 'IT Data Center Peak Grid Deficit',
+          badge: 'GRID DEFICIT // AI COMPUTING LOAD SURGE',
+          situation: 'High-performance AI model training runs across 14 enterprise data centers have coincided with an afternoon solar dip, creating a 180 MW localized power shortfall in Electronic City.',
+          question: 'How does NOVA balance industrial computational demand with civic power?',
+          options: [
+            {
+              key: 'A',
+              title: 'Automated Data Center Compute Throttling',
+              desc: 'Shift non-urgent batch training jobs to nocturnal hours when regional wind generation peaks.',
+              deltas: { sustainability: 17, safety: 15, efficiency: 19, wellbeing: 12, innovation: 18 },
+              narrative: 'Shaved 120 MW instantly with zero loss to commercial data integrity. Residential power held stable.'
+            },
+            {
+              key: 'B',
+              title: 'Deploy Solid-State Campus Microgrids',
+              desc: 'Discharge dedicated commercial solid-state battery banks to island the tech parks from the public grid.',
+              deltas: { sustainability: 14, safety: 16, efficiency: 15, wellbeing: 14, innovation: 15 },
+              narrative: 'Tech parks operated 100% self-sufficiently for 6 hours without drawing a single watt from municipal lines.'
+            },
+            {
+              key: 'C',
+              title: 'Peer-to-Peer Rooftop Solar Energy Barter',
+              desc: 'Incentivize 40,000 suburban households to sell surplus rooftop solar to tech campuses at dynamic green rates.',
+              deltas: { sustainability: 20, safety: 11, efficiency: 16, wellbeing: 18, innovation: 20 },
+              narrative: 'Citizens earned substantial green income while powering the city\'s knowledge economy.'
+            },
+            {
+              key: 'D',
+              title: 'Smart District Geothermal Heat Sinks',
+              desc: 'Channel server heat into deep geothermal exchange loops to warm residential water systems in adjoining quarters.',
+              deltas: { sustainability: 19, safety: 14, efficiency: 18, wellbeing: 16, innovation: 19 },
+              narrative: 'Server waste heat converted into civic utility, setting a global benchmark for circular computing.'
+            }
+          ]
+        },
+        {
+          id: 'healthcare',
+          number: '04',
+          title: 'Peri-Urban Healthcare & Trauma Dispatch',
+          badge: 'EMS TELEMETRY // PERIPHERAL ACCESSIBILITY',
+          situation: 'A multi-casualty accident on the outskirts of Sarjapur Road risks critical delay because nearest tertiary hospitals are 18 km away through congested traffic.',
+          question: 'How does NOVA deploy rapid trauma response to peripheral neighborhoods?',
+          options: [
+            {
+              key: 'A',
+              title: 'Deploy Automated Aero-Med Defibrillator Drone',
+              desc: 'Launch high-speed vertical take-off drone carrying automated trauma equipment and holographic surgeon link.',
+              deltas: { sustainability: 10, safety: 21, efficiency: 18, wellbeing: 17, innovation: 20 },
+              narrative: 'Drone arrived in 94 seconds. On-scene bystanders guided by remote trauma surgeon to stabilize patients.'
+            },
+            {
+              key: 'B',
+              title: 'Activate Peripheral Modular Emergency Clinics',
+              desc: 'Direct patients to newly deployed modular neighborhood triage suites equipped with robotic telemetry diagnostics.',
+              deltas: { sustainability: 12, safety: 18, efficiency: 14, wellbeing: 19, innovation: 16 },
+              narrative: 'Patients stabilized locally within 8 minutes, eliminating the need for hazardous high-speed transit.'
+            },
+            {
+              key: 'C',
+              title: 'Dynamic Traffic Green-Beacon Signal Clearance',
+              desc: 'Clear a 14-km continuous green signal wave across arterial junctions for high-speed ambulance transit.',
+              deltas: { sustainability: 7, safety: 19, efficiency: 12, wellbeing: 14, innovation: 14 },
+              narrative: 'Ambulance traverse time cut by 68%. All patients admitted to surgical trauma suites in critical window.'
+            },
+            {
+              key: 'D',
+              title: 'Crowdsourced First-Responder Civic Mesh',
+              desc: 'Alert certified medical professionals and civic first-aiders located within 500 meters via emergency app.',
+              deltas: { sustainability: 11, safety: 17, efficiency: 11, wellbeing: 20, innovation: 13 },
+              narrative: 'Four off-duty doctors arrived on scene in 120 seconds, illustrating the power of connected civic community.'
+            }
+          ]
+        }
+      ]
+    },
+
+    hyderabad: {
+      id: 'hyderabad',
+      name: 'Hyderabad',
+      state: 'Telangana',
+      country: 'India',
+      tagline: 'Deccan Innovation Hub & Heritage Water Networks',
+      coordinates: 'LAT 17.3850° N • LON 78.4867° E',
+      populationDisplay: '7,800,000',
+      heroContext: 'Rejuvenating Musi River basin stormwater resilience, optimizing Cyberabad IT transit corridors, and coordinating regional bio-pharma health networks.',
+      profile: {
+        environment: 'Granitic Deccan Basin & Musi River Plain',
+        airQuality: 'Moderate (AQI 62)',
+        mobility: 'Elevated Corridors with Choke-points',
+        urbanGrowth: 'Rapid Tech-Driven Peripheral Growth',
+        energy: 'Solar + Gas Cogeneration Lattice (78%)',
+        healthcare: 'National Bio-Pharma & Clinical Hub (3.3 min)',
+        environmentalRisk: 'Moderate (Musi River Floods & Summer Heat)',
+        greenCover: 'Expanding Urban Forest Blocks (28%)'
+      },
+      metrics: {
+        population: 7800000,
+        energyEfficiency: 88.0,
+        airQualityIndex: 62,
+        trafficCongestion: 52,
+        healthcareResponse: 3.3,
+        renewableMix: 78.0,
+        sustainability: 82,
+        safety: 86,
+        efficiency: 87,
+        wellbeing: 85,
+        innovation: 91
+      },
+      challenges: [
+        {
+          tag: 'RIVER RESILIENCE',
+          title: 'Musi River Catchment & Urban Inundation',
+          desc: 'Flash cloudbursts over the granite Deccan catchment cause rapid Musi River swelling, flooding heritage bridge corridors and low-lying settlements.'
+        },
+        {
+          tag: 'TECH LOGISTICS',
+          title: 'Cyberabad & Hitec City Transit Bottlenecks',
+          desc: 'High commuter density between older historic quarters and modern tech clusters strains arterial junctions along the Outer Ring Road.'
+        },
+        {
+          tag: 'CIRCULAR INDUSTRY',
+          title: 'Bio-Pharma Industrial Water Management',
+          desc: 'Genome Valley and pharmaceutical industrial clusters require strict zero-liquid-discharge closed-loop water treatment.'
+        },
+        {
+          tag: 'AQUIFER PROTECTION',
+          title: 'Granite Rock Aquifer & Summer Heat Mitigation',
+          desc: 'Hard-rock Deccan terrain has limited natural infiltration, leading to summer groundwater exhaustion during prolonged heatwaves.'
+        }
+      ],
+      scenarios: [
+        {
+          id: 'musi',
+          number: '01',
+          title: 'Musi River Basin Flash Cloudburst',
+          badge: 'FLOOD SURGE // 140MM CLOUDBURST',
+          situation: 'An intense cloudburst over the upper catchment has triggered sudden discharge into the Musi River. River levels are rising at 0.5 meters/hour, threatening Chaderghat and Moosarambagh causeways.',
+          question: 'How should NOVA safeguard the river corridor and protect civic connectivity?',
+          options: [
+            {
+              key: 'A',
+              title: 'Activate Automated Ecological Retention Reservoirs',
+              desc: 'Divert peak flood volumes into upstream retention wetlands and urban lakes (Himayat Sagar and Osman Sagar).',
+              deltas: { sustainability: 18, safety: 18, efficiency: 10, wellbeing: 16, innovation: 14 },
+              narrative: 'Upstream lakes absorbed 70% of the surge. The Musi held safely within its banks with zero structural breach.'
+            },
+            {
+              key: 'B',
+              title: 'Dynamic Causeways Barrier Deployment & Rerouting',
+              desc: 'Deploy automated hydraulic flood barriers at vulnerable bridges while routing traffic over elevated expressways.',
+              deltas: { sustainability: 10, safety: 19, efficiency: 13, wellbeing: 14, innovation: 16 },
+              narrative: 'Zero citizens stranded. Automated barriers sealed causeways 20 minutes before water crested.'
+            },
+            {
+              key: 'C',
+              title: 'Deploy Autonomous Drainage Siphon Pumping',
+              desc: 'Engage solar-powered high-capacity storm pumps to dewater localized arterial underpasses into stormwater cisterns.',
+              deltas: { sustainability: 14, safety: 16, efficiency: 17, wellbeing: 13, innovation: 16 },
+              narrative: 'Key underpasses cleared in 35 minutes, maintaining critical transit connection to the airport.'
+            },
+            {
+              key: 'D',
+              title: 'Multi-Lingual Civic Smart Beacon Warnings',
+              desc: 'Broadcast localized audio alerts and SMS coordinates in Telugu, Urdu, and English to all residents within 1 km of the river.',
+              deltas: { sustainability: 9, safety: 20, efficiency: 11, wellbeing: 17, innovation: 12 },
+              narrative: 'Complete community awareness. 28,000 residents moved possessions to upper floors without panic.'
+            }
+          ]
+        },
+        {
+          id: 'traffic',
+          number: '02',
+          title: 'Cyberabad & Hitec City Transit Flow Disruption',
+          badge: 'TRANSIT OVERLOAD // HITEC CITY JUNCTION',
+          situation: 'A synchronized shift change across Genome Valley and Cyberabad has produced severe bottlenecks at Gachibowli junction, causing 2-hour delays for 90,000 commuters.',
+          question: 'Which mobility strategy clears the Deccan tech corridor?',
+          options: [
+            {
+              key: 'A',
+              title: 'Deploy Dynamic Overhead Express Corridors',
+              desc: 'Reconfigure elevated flyover lanes dynamically for outbound high-occupancy vehicles and electric shuttle pods.',
+              deltas: { sustainability: 13, safety: 14, efficiency: 19, wellbeing: 14, innovation: 17 },
+              narrative: 'Average commute time slashed by 62%. Outbound flow cleared smoothly onto the Outer Ring Road.'
+            },
+            {
+              key: 'B',
+              title: 'Surge Metro Rail Cadence to 80 Seconds',
+              desc: 'Deploy autonomous high-cadence trains on the Blue Line and provide last-mile electric scooters at tech park gates.',
+              deltas: { sustainability: 19, safety: 16, efficiency: 15, wellbeing: 17, innovation: 16 },
+              narrative: '68,000 commuters transitioned to rapid rail, removing thousands of private vehicles from surface roads.'
+            },
+            {
+              key: 'C',
+              title: 'Decentralized Micro-Hub Departure Scheduling',
+              desc: 'Coordinate campus departure intervals across 60 multinational tech campuses using AI scheduling algorithms.',
+              deltas: { sustainability: 14, safety: 12, efficiency: 16, wellbeing: 15, innovation: 15 },
+              narrative: 'Crush hour dispersed over 2.5 hours, permanently leveling traffic peaks across Cyberabad.'
+            },
+            {
+              key: 'D',
+              title: 'Clear-Corridor Emergency Medical Drone Mesh',
+              desc: 'Reserve emergency air channels for medical delivery drones and geofence right lanes for trauma ambulances.',
+              deltas: { sustainability: 7, safety: 20, efficiency: 12, wellbeing: 16, innovation: 14 },
+              narrative: 'Emergency response time held steady at 2.8 minutes despite crushing surface vehicle density.'
+            }
+          ]
+        },
+        {
+          id: 'energy',
+          number: '03',
+          title: 'Summer Heatwave & Bio-Pharma Power Stress',
+          badge: 'PEAK LOAD // 44.5°C SUMMER DEFICIT',
+          situation: 'Temperatures have touched 44.5°C. High refrigeration demands from pharmaceutical storage and residential AC have created a 220 MW grid deficit.',
+          question: 'How does NOVA balance life-saving bio-pharma cold chains with residential comfort?',
+          options: [
+            {
+              key: 'A',
+              title: 'Lock Priority Power to Bio-Pharma Cold Chains & Hospitals',
+              desc: 'Isolate cold storage vaccine facilities and tertiary hospitals on dedicated microgrid circuits while dimming street lighting.',
+              deltas: { sustainability: 14, safety: 20, efficiency: 12, wellbeing: 15, innovation: 13 },
+              narrative: 'Critical medical and vaccine reserves preserved with zero spoilage. High public gratitude.'
+            },
+            {
+              key: 'B',
+              title: 'Discharge District Solid-State Substation Reserves',
+              desc: 'Draw down municipal battery reserves by 45% to cover the afternoon peak without any citizen load shedding.',
+              deltas: { sustainability: 12, safety: 16, efficiency: 14, wellbeing: 16, innovation: 14 },
+              narrative: 'City powered through the heatwave seamlessly. Battery banks replenished overnight via wind power.'
+            },
+            {
+              key: 'C',
+              title: 'District Automated HVAC Temperature Modulation',
+              desc: 'Raise commercial building thermostat setpoints by 1.8°C across 3,000 government and private office towers.',
+              deltas: { sustainability: 16, safety: 14, efficiency: 18, wellbeing: 12, innovation: 17 },
+              narrative: 'Saved 140 MW in 90 seconds with zero noticeable disruption to workplace productivity.'
+            },
+            {
+              key: 'D',
+              title: 'Peer-to-Peer Rooftop Solar Incentive Trading',
+              desc: 'Allow suburban homeowners in Jubilee Hills and Gachibowli to sell solar power directly to commercial complexes.',
+              deltas: { sustainability: 20, safety: 12, efficiency: 15, wellbeing: 17, innovation: 19 },
+              narrative: 'Over 85 MWh generated locally, transforming suburban rooftops into clean virtual power plants.'
+            }
+          ]
+        },
+        {
+          id: 'water',
+          number: '04',
+          title: 'Industrial Bio-Pharma Closed-Loop Water Stress',
+          badge: 'WATER METABOLISM // ZERO LIQUID DISCHARGE',
+          situation: 'A sudden technical breakdown in an industrial effluent treatment pipeline threatens untreated chemical runoff into downstream agricultural irrigation channels.',
+          question: 'How does NOVA enforce zero liquid discharge and protect civic water supplies?',
+          options: [
+            {
+              key: 'A',
+              title: 'Automated Isolation Valve Lock & Siphon Diversion',
+              desc: 'Engage automated shutoff valves within 40 ms and divert industrial discharge into sealed emergency holding tanks.',
+              deltas: { sustainability: 19, safety: 19, efficiency: 12, wellbeing: 16, innovation: 16 },
+              narrative: 'Zero toxic seepage into groundwater. Contaminated stream captured 100% in sealed treatment caverns.'
+            },
+            {
+              key: 'B',
+              title: 'Deploy Mobile Ultrasonic Bioremediation Units',
+              desc: 'Inject specialized catalytic enzymes and ozone nano-bubbles into holding reservoirs to neutralize contaminants in hours.',
+              deltas: { sustainability: 21, safety: 17, efficiency: 14, wellbeing: 15, innovation: 19 },
+              narrative: 'Water purified to potable standards on-site and recirculated back into industrial cooling towers.'
+            },
+            {
+              key: 'C',
+              title: 'Activate Multi-Sensor Deep Aquifer Monitoring',
+              desc: 'Continuous spectrophotometric testing of 350 perimeter wells to ensure absolute safety of drinking water.',
+              deltas: { sustainability: 15, safety: 18, efficiency: 13, wellbeing: 17, innovation: 15 },
+              narrative: 'Complete data transparency. Real-time test results streamed to citizen app, eliminating public anxiety.'
+            },
+            {
+              key: 'D',
+              title: 'Mandatory Industrial Production Throttling',
+              desc: 'Temporarily pause high-effluent chemical batch synthesis until primary closed-loop filtration is certified.',
+              deltas: { sustainability: 17, safety: 16, efficiency: -6, wellbeing: 14, innovation: 11 },
+              narrative: 'Industrial compliance reinforced. Clear signal sent that public health takes precedence over quarterly output.'
+            }
+          ]
+        }
+      ]
+    }
+  },
+
+  // Helper Methods for Active City Management
+  getActiveCity: function() {
+    return this.cityData[this.activeCityId] || this.cityData.dehradun;
+  },
+
+  setActiveCity: function(cityId) {
+    if (this.cityData[cityId]) {
+      this.activeCityId = cityId;
+      const city = this.cityData[cityId];
+      // Update baseline to reflect selected city metrics
+      this.baseline = { ...city.metrics };
+      // Update active scenarios
+      this.simulationScenarios = city.scenarios;
+      // Dispatch custom event for reactive subsystem updates
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('nova:city-changed', {
+          detail: { cityId, city }
+        }));
+      }
+      return city;
+    }
+    return null;
+  },
+
+  getAllCities: function() {
+    return Object.values(this.cityData);
+  },
+
+  // Baseline Fallback (Defaults to Dehradun)
   baseline: {
-    population: 2450000,
-    energyEfficiency: 92.4, // %
-    airQualityIndex: 14,    // AQI (lower is better)
-    trafficCongestion: 12,  // %
-    healthcareResponse: 3.4,// minutes
-    renewableMix: 88.6,     // %
-    sustainability: 89,     // score 0-100
-    safety: 90,             // score 0-100
-    efficiency: 92,         // score 0-100
-    wellbeing: 91,          // score 0-100
-    innovation: 85          // score 0-100
+    population: 840000,
+    energyEfficiency: 86.4,
+    airQualityIndex: 68,
+    trafficCongestion: 42,
+    healthcareResponse: 4.1,
+    renewableMix: 74.0,
+    sustainability: 84,
+    safety: 82,
+    efficiency: 78,
+    wellbeing: 88,
+    innovation: 80
   },
 
   // Section 01: Six Living City Zones
@@ -4525,161 +6539,8 @@ window.NOVA_CONFIG = {
     }
   },
 
-  // Section 03: Four Realistic Simulation Scenarios
-  simulationScenarios: [
-    {
-      id: 'heatwave',
-      number: '01',
-      title: 'Extreme Heatwave Alert',
-      badge: 'MICROCLIMATE SURGE // +5°C SPIKE',
-      situation: 'NOVA meteorological sensors project a sustained 5°C temperature spike over the next 72 hours. Grid refrigeration demand is surging by 42%, while vulnerable elderly citizens face severe thermal stress.',
-      question: 'What should NOVA prioritize to maintain urban equilibrium?',
-      options: [
-        {
-          key: 'A',
-          title: 'Activate District Cooling & Civic Sanctuaries',
-          desc: 'Deploy automated misting networks, convert municipal halls to 24/7 cooling centers, and prioritize public transit to sanctuaries.',
-          deltas: { sustainability: 8, safety: 16, efficiency: -6, wellbeing: 15, innovation: 4 },
-          narrative: 'Civic safety and wellbeing surged dramatically as vulnerable populations were protected. Energy efficiency suffered minor curtailment due to heavy localized chilling.'
-        },
-        {
-          key: 'B',
-          title: 'Surge Renewable Storage Distribution',
-          desc: 'Draw down solid-state battery reserves and redirect clean microgrid feeds exclusively to district refrigeration corridors.',
-          deltas: { sustainability: 14, safety: 10, efficiency: 9, wellbeing: 7, innovation: 11 },
-          narrative: 'The grid demonstrated exceptional resilience with zero brownouts, though non-cooling public zones reported moderate thermal discomfort.'
-        },
-        {
-          key: 'C',
-          title: 'Mandate Non-Essential Industrial Curtailment',
-          desc: 'Temporarily throttle heavy manufacturing and data centers to safeguard household cooling and emergency service capacity.',
-          deltas: { sustainability: 16, safety: 8, efficiency: -11, wellbeing: 10, innovation: 2 },
-          narrative: 'Energy demand dropped within 4 minutes, ensuring residential power continuity, at the cost of short-term industrial economic productivity.'
-        },
-        {
-          key: 'D',
-          title: 'Autonomous Holistic Equilibrium Optimization',
-          desc: 'Permit NOVA AI to dynamically throttle HVAC by ±1.2°C across 300,000 buildings while dispatching predictive medical drones.',
-          deltas: { sustainability: 12, safety: 14, efficiency: 15, wellbeing: 8, innovation: 18 },
-          narrative: 'A masterclass in algorithmic balancing. The city maintained 98.4% grid stability with invisible fractional adjustments across the built environment.'
-        }
-      ]
-    },
-    {
-      id: 'traffic',
-      number: '02',
-      title: 'Arterial Gridlock & Transit Crisis',
-      badge: 'CONGESTION SURGE // ARTERIAL 4 & 7',
-      situation: 'A multi-vehicle autonomous shuttle collision on Sector 2 Arterial has triggered cascade congestion across central transit corridors, threatening emergency hospital access.',
-      question: 'How should the city infrastructure orchestrate the response?',
-      options: [
-        {
-          key: 'A',
-          title: 'Reroute Autonomous AV Fleet to Peripheral Rings',
-          desc: 'Instruct all Level-5 autonomous vehicles to detour via outer ring roads, leaving core avenues completely clear for emergency transit.',
-          deltas: { sustainability: 6, safety: 15, efficiency: 7, wellbeing: 10, innovation: 12 },
-          narrative: 'Core avenues cleared in 90 seconds. Average trip times for commuters increased slightly, but critical emergency routes were uncompromised.'
-        },
-        {
-          key: 'B',
-          title: 'Surge Rapid Transit & Subterranean Maglev',
-          desc: 'Make all underground transit fare-free, increase train cadence to 90-second intervals, and incentivize drivers to park at perimeter hubs.',
-          deltas: { sustainability: 15, safety: 12, efficiency: 11, wellbeing: 14, innovation: 9 },
-          narrative: 'Public transit absorbed 68,000 commuters within 30 minutes, drastically cutting surface vehicular density and boosting citizen satisfaction.'
-        },
-        {
-          key: 'C',
-          title: 'Dynamic Signal & Lane Reversal Synchronization',
-          desc: 'Dynamically reconfigure reversible multi-modal lanes and synchronize smart signals to bleed traffic toward secondary thoroughfares.',
-          deltas: { sustainability: 5, safety: 8, efficiency: 17, wellbeing: 7, innovation: 14 },
-          narrative: 'Traffic flow normalized swiftly through algorithmic signal tuning, showcasing advanced smart-city routing efficiency.'
-        },
-        {
-          key: 'D',
-          title: 'Absolute Priority Emergency Corridor Lock',
-          desc: 'Enforce geo-fenced beacon corridors that clear traffic 2 kilometers ahead of ambulances using audio and HUD in-vehicle prompts.',
-          deltas: { sustainability: 4, safety: 20, efficiency: 6, wellbeing: 12, innovation: 15 },
-          narrative: 'Ambulance travel time dropped to an unprecedented 2.1 minutes. Zero fatalities reported from the incident.'
-        }
-      ]
-    },
-    {
-      id: 'energy',
-      number: '03',
-      title: 'Peak Deficit & Renewable Cloud Interruption',
-      badge: 'POWER RESERVE DEFICIT // -38% SOLAR YIELD',
-      situation: 'An unexpected marine stratus cloud layer has slashed solar generation by 38% at the exact moment industrial and residential cooling peaks.',
-      question: 'Which energy strategy maintains critical urban operations?',
-      options: [
-        {
-          key: 'A',
-          title: 'Rapid Discharge of Solid-State Substation Reserves',
-          desc: 'Draw down municipal grid storage batteries by 35% to maintain 100% uninterrupted power to all sectors without human intervention.',
-          deltas: { sustainability: 10, safety: 14, efficiency: 12, wellbeing: 13, innovation: 10 },
-          narrative: 'Seamless continuity achieved with zero flicker. Storage reserves were depleted to 55%, requiring rapid overnight wind replenishment.'
-        },
-        {
-          key: 'B',
-          title: 'Prioritize Hospital & Life-Safety Circuits',
-          desc: 'Lock primary power to healthcare, water filtration, and emergency response, while gently dimming public street illumination by 30%.',
-          deltas: { sustainability: 13, safety: 18, efficiency: 8, wellbeing: 9, innovation: 7 },
-          narrative: 'Critical human infrastructure remained impenetrable. Citizens praised the ethical prioritization of medical and essential facilities.'
-        },
-        {
-          key: 'C',
-          title: 'Activate Peer-to-Peer Neighborhood Microgrid Barter',
-          desc: 'Enable residential micro-generators and private batteries to feed the grid in exchange for civic green credits.',
-          deltas: { sustainability: 17, safety: 9, efficiency: 14, wellbeing: 16, innovation: 19 },
-          narrative: 'Citizens actively sold 140 MWh of surplus decentralized power back to the grid, transforming the crisis into a triumph of civic collaboration.'
-        },
-        {
-          key: 'D',
-          title: 'Automated Commercial Load Shedding',
-          desc: 'Selectively idle non-critical commercial displays, aesthetic fountains, and server farm non-urgent computing jobs.',
-          deltas: { sustainability: 15, safety: 10, efficiency: 16, wellbeing: 8, innovation: 11 },
-          narrative: '50 MW shaved instantly without impacting citizen quality of life or safety.'
-        }
-      ]
-    },
-    {
-      id: 'healthcare',
-      number: '04',
-      title: 'Syndromic Surge & Clinical Capacity',
-      badge: 'HEALTHCARE SURGE // MULTI-CLUSTER OUTBREAK',
-      situation: 'A sudden airborne allergen surge has spiked acute respiratory admissions across Eastern NOVA. Hospital emergency departments are operating at 94% capacity.',
-      question: 'How does NOVA balance algorithmic automation with human compassionate care?',
-      options: [
-        {
-          key: 'A',
-          title: 'Deploy AI Remote Triage & Home Monitoring Kits',
-          desc: 'Distribute smart inhaler bio-sensors and remote AI video consultations for mild cases, preserving hospital beds for critical patients.',
-          deltas: { sustainability: 8, safety: 14, efficiency: 18, wellbeing: 15, innovation: 17 },
-          narrative: '72% of patients received targeted care in the comfort of their homes, preventing clinical gridlock and reducing nosocomial infection risks.'
-        },
-        {
-          key: 'B',
-          title: 'Dispatch Mobile Modular Care Units to Community Centers',
-          desc: 'Convert neighborhood libraries and transit hubs into clean-air respiratory care lounges staffed by human nurse clinicians.',
-          deltas: { sustainability: 11, safety: 16, efficiency: 9, wellbeing: 18, innovation: 12 },
-          narrative: 'A deeply human, community-rooted response. Immediate local relief fostered immense public trust and comfort.'
-        },
-        {
-          key: 'C',
-          title: 'Surge Medical Volunteer Corps & Mutual Aid',
-          desc: 'Activate vetted off-duty healthcare workers and trained civic volunteers with real-time logistical coordination apps.',
-          deltas: { sustainability: 9, safety: 15, efficiency: 11, wellbeing: 19, innovation: 10 },
-          narrative: 'Over 800 civic volunteers mobilized in 2 hours, illustrating that algorithms are most powerful when organizing human compassion.'
-        },
-        {
-          key: 'D',
-          title: 'Dynamic Cross-Hospital Algorithmic Bed Balancing',
-          desc: 'Rebalance patients across all 9 metropolitan hospitals using autonomous medical transit pods to equalize clinician workloads.',
-          deltas: { sustainability: 7, safety: 17, efficiency: 16, wellbeing: 12, innovation: 15 },
-          narrative: 'Hospital bed utilization stabilized at an optimal 78% across the entire city, preventing clinician burnout.'
-        }
-      ]
-    }
-  ],
+  // Active Simulation Scenarios (Defaults to active city scenarios)
+  simulationScenarios: [],
 
   // Section 06: Timeline Milestones (2026 to 2050)
   timeline: {
@@ -4782,7 +6643,7 @@ window.NOVA_CONFIG = {
     }
   ],
 
-  // Credible Sources (Distinguishing Real Tech vs Future Concept)
+  // Credible Sources
   sources: [
     {
       sector: 'Urban Digital Twins',
@@ -4840,6 +6701,9 @@ window.NOVA_CONFIG = {
     }
   ]
 };
+
+// Initialize default city active scenarios
+window.NOVA_CONFIG.simulationScenarios = window.NOVA_CONFIG.cityData.dehradun.scenarios;
 
 
 /* --- audio.js --- */
@@ -6201,11 +8065,41 @@ class NovaSimulationEngine {
 
     this.scenarios = window.NOVA_CONFIG.simulationScenarios;
     this.init();
+    this.listenToCityChanges();
   }
 
   init() {
     this.bindTabButtons();
+    this.updateTabLabels();
     this.renderScenario(0);
+  }
+
+  listenToCityChanges() {
+    window.addEventListener('nova:city-changed', (e) => {
+      const city = e.detail.city;
+      if (!city) return;
+      this.scenarios = city.scenarios;
+      this.userChoices = {};
+      this.metrics = { ...city.metrics };
+      this.currentScenarioIndex = 0;
+      this.updateTabLabels();
+      this.renderScenario(0);
+      this.notifySubsystems();
+    });
+  }
+
+  updateTabLabels() {
+    const tabButtons = document.querySelectorAll('.sim-tab-btn');
+    tabButtons.forEach((btn, idx) => {
+      if (this.scenarios && this.scenarios[idx]) {
+        const textSpan = btn.querySelector('span:not(.sim-tab-num):not(.sim-tab-status)');
+        if (textSpan) {
+          const s = this.scenarios[idx];
+          const words = (s.title || '').split('&')[0].split('—')[0].trim().toUpperCase();
+          textSpan.textContent = words.length > 15 ? words.slice(0, 13) + '..' : words;
+        }
+      }
+    });
   }
 
   bindTabButtons() {
@@ -6661,6 +8555,17 @@ class NovaDashboard {
       const { metrics } = e.detail;
       this.updateMetrics(metrics);
     });
+
+    window.addEventListener('nova:city-changed', (e) => {
+      const { city } = e.detail;
+      if (!city) return;
+      const elCity = document.getElementById('dash-city-name');
+      if (elCity) elCity.textContent = city.name.toUpperCase();
+      this.currentPopulation = city.metrics.population;
+      const popEl = document.getElementById('dash-val-pop');
+      if (popEl) popEl.textContent = this.currentPopulation.toLocaleString();
+      this.updateMetrics(city.metrics);
+    });
   }
 
   updateMetrics(m) {
@@ -6672,11 +8577,15 @@ class NovaDashboard {
     const elWellbeing = document.getElementById('dash-val-wellbeing');
     const elSustainability = document.getElementById('dash-val-sustainability');
 
+    const activeCity = window.NOVA_CONFIG ? window.NOVA_CONFIG.getActiveCity() : null;
+    const baseAqi = activeCity ? activeCity.metrics.airQualityIndex : 68;
+    const sustRatio = 100 / Math.max(30, m.sustainability);
+
     if (elEnergy) elEnergy.textContent = `${m.efficiency.toFixed(1)}%`;
-    if (elAqi) elAqi.textContent = Math.round(14 * (100 / m.sustainability));
-    if (elTraffic) elTraffic.textContent = `${Math.max(4, Math.round(25 - (m.efficiency * 0.15)))}%`;
+    if (elAqi) elAqi.textContent = Math.round(baseAqi * (sustRatio * 0.8 + 0.2));
+    if (elTraffic) elTraffic.textContent = `${Math.max(4, Math.round(35 - (m.efficiency * 0.2)))}%`;
     if (elHealthcare) elHealthcare.textContent = `${(5.5 - (m.safety * 0.025)).toFixed(1)} min`;
-    if (elRenewable) elRenewable.textContent = `${(m.sustainability * 0.98).toFixed(1)}%`;
+    if (elRenewable) elRenewable.textContent = `${Math.min(99.9, m.sustainability * 0.96).toFixed(1)}%`;
     if (elWellbeing) elWellbeing.textContent = `${m.wellbeing}%`;
     if (elSustainability) elSustainability.textContent = `${m.sustainability}%`;
 
@@ -6698,12 +8607,15 @@ class NovaDashboard {
   }
 
   startLiveTickers() {
-    // Dynamic population live tick
+    // Dynamic population live tick based on current active city
     const popEl = document.getElementById('dash-val-pop');
-    let pop = 2450120;
+    const activeCity = window.NOVA_CONFIG ? window.NOVA_CONFIG.getActiveCity() : null;
+    this.currentPopulation = activeCity ? activeCity.metrics.population : 840000;
+    if (popEl) popEl.textContent = this.currentPopulation.toLocaleString();
+
     setInterval(() => {
-      pop += Math.floor(Math.random() * 3) - 1;
-      if (popEl) popEl.textContent = pop.toLocaleString();
+      this.currentPopulation += Math.floor(Math.random() * 3) - 1;
+      if (popEl) popEl.textContent = this.currentPopulation.toLocaleString();
     }, 3500);
 
     // Dynamic simulation timestamp clock
@@ -6987,6 +8899,386 @@ class NovaProfileEngine {
 }
 
 window.novaProfile = new NovaProfileEngine();
+
+
+/* --- city-selector.js --- */
+/**
+ * NOVA CITY-FIRST INTELLIGENCE CONTROLLER
+ * Handles City Selection modal, autocomplete search, geolocation matching,
+ * and dynamic synchronization across the localized profile, challenges,
+ * simulation, and telemetry dashboard.
+ */
+
+class NovaCitySelector {
+  constructor() {
+    this.modalEl = document.getElementById('city-selector-modal');
+    this.searchInput = document.getElementById('city-search-input');
+    this.autocompleteList = document.getElementById('city-autocomplete-list');
+    this.popularPills = document.querySelectorAll('.city-pill-btn');
+    this.locationBtn = document.getElementById('city-detect-btn');
+    this.locationStatus = document.getElementById('city-location-status');
+    this.closeBtn = document.getElementById('city-modal-close-btn');
+
+    this.cityCoords = {
+      dehradun: { lat: 30.3165, lon: 78.0322 },
+      delhi: { lat: 28.6139, lon: 77.2090 },
+      mumbai: { lat: 19.0760, lon: 72.8777 },
+      bengaluru: { lat: 12.9716, lon: 77.5946 },
+      hyderabad: { lat: 17.3850, lon: 78.4867 }
+    };
+
+    this.init();
+  }
+
+  init() {
+    this.bindEvents();
+    this.checkInitialCity();
+  }
+
+  checkInitialCity() {
+    let savedCity = null;
+    try {
+      savedCity = localStorage.getItem('nova_selected_city');
+    } catch (e) {}
+
+    if (savedCity && window.NOVA_CONFIG.cityData[savedCity]) {
+      this.applyCity(savedCity, false);
+    } else {
+      // Default to Dehradun and open selection modal for city-first onboarding
+      this.applyCity('dehradun', false);
+      setTimeout(() => {
+        this.openModal();
+      }, 500);
+    }
+  }
+
+  bindEvents() {
+    // Open Modal Triggers
+    const navBtn = document.getElementById('nav-city-btn');
+    if (navBtn) {
+      navBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openModal();
+      });
+    }
+
+    const heroChangeBtn = document.getElementById('hero-change-city-btn');
+    if (heroChangeBtn) {
+      heroChangeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openModal();
+      });
+    }
+
+    // Close Modal
+    if (this.closeBtn) {
+      this.closeBtn.addEventListener('click', () => this.closeModal());
+    }
+
+    if (this.modalEl) {
+      this.modalEl.addEventListener('click', (e) => {
+        if (e.target === this.modalEl) {
+          this.closeModal();
+        }
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.modalEl && this.modalEl.classList.contains('active')) {
+        this.closeModal();
+      }
+    });
+
+    // Popular City Pills
+    this.popularPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const cityId = pill.getAttribute('data-city');
+        if (cityId) {
+          this.selectCity(cityId);
+        }
+      });
+    });
+
+    // Search Autocomplete
+    if (this.searchInput) {
+      this.searchInput.addEventListener('input', () => {
+        this.handleSearchInput(this.searchInput.value.trim());
+      });
+
+      this.searchInput.addEventListener('focus', () => {
+        this.handleSearchInput(this.searchInput.value.trim());
+      });
+    }
+
+    // Geolocation "Use My Location"
+    if (this.locationBtn) {
+      this.locationBtn.addEventListener('click', () => {
+        this.detectUserLocation();
+      });
+    }
+  }
+
+  openModal() {
+    if (!this.modalEl) return;
+    this.modalEl.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    if (this.searchInput) {
+      this.searchInput.value = '';
+      setTimeout(() => this.searchInput.focus(), 150);
+    }
+    if (this.autocompleteList) {
+      this.autocompleteList.classList.remove('active');
+    }
+    if (this.locationStatus) {
+      this.locationStatus.textContent = '';
+      this.locationStatus.className = 'location-status-text';
+    }
+    this.updatePillsActiveState(window.NOVA_CONFIG.activeCityId);
+    if (window.novaAudio) window.novaAudio.playClick();
+  }
+
+  closeModal() {
+    if (!this.modalEl) return;
+    this.modalEl.classList.remove('active');
+    document.body.style.overflow = '';
+    if (window.novaAudio) window.novaAudio.playClick();
+  }
+
+  updatePillsActiveState(activeId) {
+    this.popularPills.forEach(p => {
+      p.classList.toggle('active', p.getAttribute('data-city') === activeId);
+    });
+  }
+
+  handleSearchInput(query) {
+    if (!this.autocompleteList) return;
+
+    if (!query) {
+      this.autocompleteList.classList.remove('active');
+      this.autocompleteList.innerHTML = '';
+      return;
+    }
+
+    const q = query.toLowerCase();
+    const cities = Object.values(window.NOVA_CONFIG.cityData || {});
+    const matches = cities.filter(city => {
+      return (
+        city.name.toLowerCase().includes(q) ||
+        city.state.toLowerCase().includes(q) ||
+        city.tagline.toLowerCase().includes(q) ||
+        city.id.toLowerCase().includes(q)
+      );
+    });
+
+    if (matches.length === 0) {
+      this.autocompleteList.innerHTML = `
+        <div class="city-autocomplete-item" style="cursor: default; opacity: 0.6;">
+          <div class="city-item-main">
+            <span class="city-item-name">No regional city found for "${query}"</span>
+            <span class="city-item-sub">Supported launch hubs: Dehradun, Delhi, Mumbai, Bengaluru, Hyderabad</span>
+          </div>
+        </div>
+      `;
+      this.autocompleteList.classList.add('active');
+      return;
+    }
+
+    this.autocompleteList.innerHTML = matches.map(city => `
+      <div class="city-autocomplete-item" data-city="${city.id}">
+        <div class="city-item-main">
+          <span class="city-item-name">${city.name}, <span style="font-weight: 400; color: var(--text-muted);">${city.state}</span></span>
+          <span class="city-item-sub">${city.tagline}</span>
+        </div>
+        <span class="city-item-badge">${city.id.toUpperCase()}</span>
+      </div>
+    `).join('');
+
+    this.autocompleteList.classList.add('active');
+
+    this.autocompleteList.querySelectorAll('.city-autocomplete-item[data-city]').forEach(item => {
+      item.addEventListener('click', () => {
+        const cityId = item.getAttribute('data-city');
+        this.selectCity(cityId);
+      });
+    });
+  }
+
+  detectUserLocation() {
+    if (!navigator.geolocation) {
+      if (this.locationStatus) {
+        this.locationStatus.textContent = 'Geolocation not supported in browser.';
+        this.locationStatus.className = 'location-status-text warning';
+      }
+      return;
+    }
+
+    if (this.locationStatus) {
+      this.locationStatus.textContent = 'Acquiring satellite coordinate lock...';
+      this.locationStatus.className = 'location-status-text';
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const userLat = pos.coords.latitude;
+        const userLon = pos.coords.longitude;
+
+        let closestCityId = 'dehradun';
+        let minDistance = Infinity;
+
+        Object.keys(this.cityCoords).forEach(cityId => {
+          const c = this.cityCoords[cityId];
+          const dist = this.haversineDistance(userLat, userLon, c.lat, c.lon);
+          if (dist < minDistance) {
+            minDistance = dist;
+            closestCityId = cityId;
+          }
+        });
+
+        const closestCity = window.NOVA_CONFIG.cityData[closestCityId];
+        if (this.locationStatus) {
+          this.locationStatus.textContent = `Nearest regional hub: ${closestCity.name} (~${Math.round(minDistance)} km)`;
+          this.locationStatus.className = 'location-status-text success';
+        }
+
+        if (window.novaAudio) window.novaAudio.playChime(659.25);
+        setTimeout(() => {
+          this.selectCity(closestCityId);
+        }, 800);
+      },
+      (err) => {
+        if (this.locationStatus) {
+          this.locationStatus.textContent = 'Location access denied. Please choose a city below.';
+          this.locationStatus.className = 'location-status-text warning';
+        }
+      },
+      { timeout: 8000 }
+    );
+  }
+
+  haversineDistance(lat1, lon1, lat2, lon2) {
+    const toRad = (x) => (x * Math.PI) / 180;
+    const R = 6371; // Earth radius in km
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  selectCity(cityId) {
+    this.applyCity(cityId, true);
+    this.closeModal();
+
+    // Smoothly scroll down to view localized profile
+    setTimeout(() => {
+      const profileSec = document.getElementById('city-profile-section');
+      if (profileSec) {
+        profileSec.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 400);
+  }
+
+  applyCity(cityId, playSound = false) {
+    if (!window.NOVA_CONFIG.cityData[cityId]) return;
+
+    window.NOVA_CONFIG.setActiveCity(cityId);
+    const city = window.NOVA_CONFIG.cityData[cityId];
+
+    this.updatePillsActiveState(cityId);
+
+    // 1. Update Navbar Badge
+    const navCityName = document.getElementById('nav-city-name');
+    if (navCityName) navCityName.textContent = city.name.toUpperCase();
+
+    // 2. Update Hero HUD
+    const heroHudCity = document.getElementById('hero-hud-city');
+    const heroHudCoords = document.getElementById('hero-hud-coords');
+    if (heroHudCity) heroHudCity.textContent = `CITY // ${city.name.toUpperCase()}`;
+    if (heroHudCoords) heroHudCoords.textContent = city.coordinates;
+
+    // 3. Update City Profile Section DOM
+    const profName = document.getElementById('profile-city-name');
+    const profTagline = document.getElementById('profile-city-tagline');
+    const profCoords = document.getElementById('profile-city-coords');
+    const profContext = document.getElementById('profile-city-context');
+
+    if (profName) profName.textContent = city.name;
+    if (profTagline) profTagline.textContent = city.tagline;
+    if (profCoords) profCoords.textContent = city.coordinates;
+    if (profContext) profContext.textContent = city.heroContext;
+
+    // Profile Metric Tiles
+    const setElemText = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    };
+
+    setElemText('prof-metric-env', city.profile.environment);
+    setElemText('prof-metric-aqi', city.profile.airQuality);
+    setElemText('prof-metric-mobility', city.profile.mobility);
+    setElemText('prof-metric-growth', city.profile.urbanGrowth);
+    setElemText('prof-metric-energy', city.profile.energy);
+    setElemText('prof-metric-health', city.profile.healthcare);
+    setElemText('prof-metric-risk', city.profile.environmentalRisk);
+    setElemText('prof-metric-canopy', city.profile.greenCover);
+
+    // 4. Update Analyzed Challenges
+    const challengeCityName = document.getElementById('challenge-city-name');
+    if (challengeCityName) challengeCityName.textContent = city.name;
+
+    const challengesGrid = document.getElementById('city-challenges-grid');
+    if (challengesGrid && city.challenges) {
+      challengesGrid.innerHTML = city.challenges.map((c, idx) => `
+        <div class="challenge-card">
+          <div class="challenge-card-top">
+            <span class="challenge-tag">${c.tag}</span>
+            <div class="challenge-status-pulse">
+              <span class="challenge-dot"></span>
+              <span>ACTIVE FRICTION</span>
+            </div>
+          </div>
+          <h4 class="challenge-title">${c.title}</h4>
+          <p class="challenge-desc">${c.desc}</p>
+          <div class="challenge-action-row">
+            <button class="challenge-btn" data-scenario-idx="${idx}">
+              RESOLVE IN SIMULATION →
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      challengesGrid.querySelectorAll('.challenge-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const sIdx = parseInt(btn.getAttribute('data-scenario-idx'), 10) || 0;
+          const simSec = document.getElementById('simulate');
+          if (simSec) {
+            simSec.scrollIntoView({ behavior: 'smooth' });
+          }
+          if (window.novaSimulation) {
+            window.novaSimulation.currentScenarioIndex = sIdx;
+            window.novaSimulation.renderScenario(sIdx);
+          }
+        });
+      });
+    }
+
+    // 5. Update Section 05 Dashboard City Badge
+    const dashCityName = document.getElementById('dash-city-name');
+    if (dashCityName) dashCityName.textContent = city.name.toUpperCase();
+
+    if (playSound && window.novaAudio) {
+      window.novaAudio.playChime(523.25, 0.4);
+    }
+  }
+}
+
+// Instantiate on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+  window.novaCitySelector = new NovaCitySelector();
+});
 
 
 /* --- main.js --- */

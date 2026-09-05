@@ -31,8 +31,10 @@
 
 ### Sticky System Header
 - **Brand Mark (`NOVA // LIVING SYSTEM OS`)**: Clicking returns to the top hero section.
-- **Navigation Links**: Direct smooth-scrolling anchors to all 7 primary modules:
-  - `CITY` → Interactive spatial sector map
+- **Active City Switcher (`[CITY NAME] CHANGE`)**: Displays the active city (e.g., `DEHRADUN`, `DELHI`, `MUMBAI`, `BENGALURU`, `HYDERABAD`). Clicking this button opens the City Selector modal overlay from anywhere on the platform without a page reload.
+- **Navigation Links**: Direct smooth-scrolling anchors to all primary modules:
+  - `CITY INTEL` → Localized city intelligence profile and analyzed friction domains
+  - `ZONES` → Interactive spatial sector map
   - `INTELLIGENCE` → Connected multi-agent network topology
   - `SIMULATE` → Executive crisis simulation
   - `HUMAN + AI` → Ethical decision matrix & policy override
@@ -48,7 +50,36 @@
 
 ---
 
-## 3. Section-by-Section Feature Guide
+## 3. City-First Intelligence
+
+NOVA adapts its entire digital twin, environmental baselines, and simulation crisis models to your selected city.
+
+### 🏙️ Where Should We Build the Future?
+When visiting NOVA, the **City Selection Modal** invites you to choose your urban canvas:
+- **Search & Autocomplete**: Start typing any city or state name (e.g. `Dehradun`, `Delhi`, `Mumbai`, `Bengaluru`, `Hyderabad`) to get instant autocomplete suggestions.
+- **Popular Regional Hubs**: Quick-select buttons for the 5 launch cities.
+- **Use My Location**: One-click geolocation that computes your nearest regional hub using the Haversine formula.
+- **Persistent Choice**: Your selected city is saved in `localStorage` (`nova_selected_city`) and can be switched dynamically anytime via the navbar or Hero HUD.
+
+### 📊 Localized City Profile & Analyzed Challenges
+Once a city is selected, NOVA dynamically renders:
+1. **Welcome Header**: City name, regional tagline, and latitude/longitude coordinates.
+2. **8-Tile Intelligence Profile**:
+   - *Environment & Topography*
+   - *Air Quality Index (AQI)*
+   - *Mobility & Transit Bottlenecks*
+   - *Urban Growth Pressure*
+   - *Energy Systems & Renewable Mix*
+   - *Healthcare Emergency Response Time*
+   - *Key Environmental/Infrastructure Risk*
+   - *Urban Tree Canopy & Ecological Cover*
+3. **“We've Analyzed Your City” (4 Critical Friction Domains)**:
+   - System diagnostics isolates 4 city-specific challenges requiring human-algorithmic intervention.
+   - Click **“RESOLVE IN SIMULATION →”** on any challenge card to jump straight into Section 03 and solve that crisis.
+
+---
+
+## 4. Section-by-Section Feature Guide
 
 ### 🌟 Hero Section — The Living 3D Digital Twin
 The landing screen features a live, procedural 3D digital twin of NOVA built with Three.js.

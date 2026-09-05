@@ -13,11 +13,41 @@ class NovaSimulationEngine {
 
     this.scenarios = window.NOVA_CONFIG.simulationScenarios;
     this.init();
+    this.listenToCityChanges();
   }
 
   init() {
     this.bindTabButtons();
+    this.updateTabLabels();
     this.renderScenario(0);
+  }
+
+  listenToCityChanges() {
+    window.addEventListener('nova:city-changed', (e) => {
+      const city = e.detail.city;
+      if (!city) return;
+      this.scenarios = city.scenarios;
+      this.userChoices = {};
+      this.metrics = { ...city.metrics };
+      this.currentScenarioIndex = 0;
+      this.updateTabLabels();
+      this.renderScenario(0);
+      this.notifySubsystems();
+    });
+  }
+
+  updateTabLabels() {
+    const tabButtons = document.querySelectorAll('.sim-tab-btn');
+    tabButtons.forEach((btn, idx) => {
+      if (this.scenarios && this.scenarios[idx]) {
+        const textSpan = btn.querySelector('span:not(.sim-tab-num):not(.sim-tab-status)');
+        if (textSpan) {
+          const s = this.scenarios[idx];
+          const words = (s.title || '').split('&')[0].split('—')[0].trim().toUpperCase();
+          textSpan.textContent = words.length > 15 ? words.slice(0, 13) + '..' : words;
+        }
+      }
+    });
   }
 
   bindTabButtons() {
